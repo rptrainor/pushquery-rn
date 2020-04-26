@@ -1,20 +1,18 @@
 import React from "react";
-import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // importing components
-import Login from "../screens/Login";
-import Signup from "../screens/Signup";
+import Home from "../screens/Home";
 import Profile from "../screens/Profile";
+
 // pulling out the bottom tab navigator from react-navigation
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+export default function tabNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Login" component={Login} />
-      <Tab.Screen name="Signup" component={Signup} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Me" component={Profile} />
     </Tab.Navigator>
   );
 }

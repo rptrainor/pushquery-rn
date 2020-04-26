@@ -10,12 +10,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import reducer from "./redux/reducers";
 
 // importing components
-import Home from "./src/screens/Home";
-import BottomTabNavigator from './src/navigation/BottomTabNavigator'
-
+import tabNavigator from "./src/navigation/tabNavigator";
+import SignUpModal from "./src/screens/SignUpModal";
 
 // creating the navigator to swtich between screens
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator();
 // applying middleware to handle async redux requests
 const middleware = applyMiddleware(thunkMiddleware);
 // creating the store with combined reducer and async middleware for redux
@@ -25,9 +24,23 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Root">
-          <Stack.Screen name="Root" component={BottomTabNavigator} />
-        </Stack.Navigator>
+        <RootStack.Navigator initialRouteName="Root">
+          <RootStack.Screen
+            name="Root"
+            component={tabNavigator}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="SignUpModal"
+            component={SignUpModal}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="LogInModal"
+            component={SignUpModal}
+            options={{ headerShown: false }}
+          />
+        </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
   );

@@ -3,8 +3,16 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default function Home() {
   return (
-    <View>
-      <Text>src/Home.js</Text>
+    <View style={styles.container}>
+      <Text>The feed of queries will go here</Text>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
