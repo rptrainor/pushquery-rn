@@ -1,27 +1,25 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import EmailSignUpBtn from "../buttons/emailSignUpBtn";
+import EmailLoginBtn from "./EmailLogInBtn";
 
-export default function SignUpModal({ navigation }) {
+export default function LogInModal({ navigation }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.dismissButton}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate("Root", { screen: "Me" })}
       >
         <Text style={styles.dismissText}>X</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <Text style={styles.SignUpText}>Sign up for Pushquery</Text>
-        <TouchableOpacity>
-          <EmailSignUpBtn />
-        </TouchableOpacity>
+        <Text style={styles.SignUpText}>Log in to Pushquery</Text>
+        <EmailLoginBtn navigation={navigation} />
       </View>
       <TouchableOpacity
         style={styles.loginButton}
-        onPress={() => navigation.navigate("LogInModal")}
+        onPress={() => navigation.navigate("SignUpModal")}
       >
-        <Text style={styles.loginText}>Already have an account? Log in</Text>
+        <Text style={styles.loginText}>Need to creat an account? Sign up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -56,6 +54,7 @@ const styles = StyleSheet.create({
     margin: 20,
     fontWeight: "bold",
     color: "black",
+    textAlign: "center"
   },
   buttonContainer: {
     flex: 4,
@@ -74,6 +73,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     padding: 15,
     margin: 15,
-    fontSize: 16,
+    fontSize: 16
   },
 });

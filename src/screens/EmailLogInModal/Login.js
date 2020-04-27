@@ -14,8 +14,8 @@ import {
   updatePassword,
   login,
   getUser,
-} from "../../redux/actions/user";
-import Firebase from "../../config/firebase";
+} from "../../../redux/actions/user";
+import Firebase from "../../../config/firebase";
 
 export default function Login({ navigation }) {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
   // && navigates to the Profile component if login is successful
   function handleLogin() {
     dispatch(login());
-    navigation.navigate("Profile");
+    navigation.navigate("Root", { screen: "Home" });
   }
 
   // each time the component mounts
@@ -40,7 +40,7 @@ export default function Login({ navigation }) {
         if (user) {
           dispatch(getUser(user.uid));
           if (user != null) {
-            navigation.navigate("Profile");
+            navigation.navigate("Root", { screen: "Me" });
           }
         }
       }),
@@ -67,10 +67,7 @@ export default function Login({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={() => dispatch(login())}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <Button
-        title="Don't have an account yet? Sign up"
-        onPress={() => navigation.navigate("Signup")}
-      />
+      
     </View>
   );
 }

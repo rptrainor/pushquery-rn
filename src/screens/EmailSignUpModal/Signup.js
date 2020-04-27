@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateEmail, updatePassword, signup } from "../../redux/actions/user";
+import { updateEmail, updatePassword, signup } from "../../../redux/actions/user";
 
 export default function Signup({ navigation }) {
   const dispatch = useDispatch();
@@ -19,12 +19,11 @@ export default function Signup({ navigation }) {
   // && after success navigates to the Profile component
   function handleSignUp() {
     dispatch(signup());
-    navigation.navigate("Profile");
+    navigation.navigate("Root", { screen: 'Home' });
   }
 
   return (
     <View style={styles.container}>
-      <Text>Signup.js</Text>
       <TextInput
         style={styles.inputBox}
         value={email}

@@ -10,8 +10,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import reducer from "./redux/reducers";
 
 // importing components
-import tabNavigator from "./src/navigation/tabNavigator";
-import SignUpModal from "./src/screens/SignUpModal";
+import tabNavigator from "./src/screens/Root/tabNavigator";
+import SignUpModal from "./src/screens/SignUpModal/SignUpModal";
+import LogInModal from "./src/screens/LogInModal/LogInModal";
+import EmailSignUpNavigator from "./src/screens/EmailSignUpModal/EmailSignUpNavigator";
+import EmailLogInNavigator from "./src/screens/EmailLogInModal/EmailLogInNavigator";
 
 // creating the navigator to swtich between screens
 const RootStack = createStackNavigator();
@@ -37,8 +40,16 @@ export default function App() {
           />
           <RootStack.Screen
             name="LogInModal"
-            component={SignUpModal}
+            component={LogInModal}
             options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Email Sign Up"
+            component={EmailSignUpNavigator}
+          />
+          <RootStack.Screen
+            name="Email Log In"
+            component={EmailLogInNavigator}
           />
         </RootStack.Navigator>
       </NavigationContainer>
