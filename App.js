@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as Font from "expo-font";
+import { SplashScreen } from "expo";
+import { Ionicons } from "@expo/vector-icons";
 
 // importing the combined reducer
 import reducer from "./redux/reducers";
@@ -24,6 +27,35 @@ const middleware = applyMiddleware(thunkMiddleware);
 const store = createStore(reducer, middleware);
 
 export default function App() {
+  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
+
+  useEffect(() => {
+    async function loadResourcesAndDataAsync() {
+      try {
+        SplashScreen.preventAutoHide();
+
+        // load fonts
+        await Font.loadAsync({
+          ...Ionicons.font,
+          "Montserrat": require("./assets/fonts/Montserrat-Regular.ttf"),
+          "Montserrat-Semibold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
+          "Lato": require("./assets/fonts/Lato-Regular.ttf"),
+        });
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        setLoadingComplete(true);
+        SplashScreen.hide();
+      }
+    }
+    loadResourcesAndDataAsync();
+  }, []);
+
+  if (!isLoadingComplete) {
+    console.log('not complete')
+    return null;
+  } else {
+    console.log('complete')
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -55,6 +87,7 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
+}
 }
 
 const styles = StyleSheet.create({});
