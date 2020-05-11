@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
+import md5 from "md5";
+
 import Firebase from "../../../config/firebase";
 
 export default function SignUpModal({ navigation }) {
@@ -15,12 +17,17 @@ export default function SignUpModal({ navigation }) {
   const [password, setPassword] = useState("");
 
   const handleSignUp = async () => {
+    let trimmedEmail = email.trim();
+    let loweredEmail = trimmedEmail.toLowerCase();
+    let hashedEmail = md5(loweredEmail);
+    let avatar = `https://www.gravatar.com/avatar/${hashedEmail}?d=https%3A%2F%2Fexample.com%2Fimages%2Favatar.jpg`;
     try {
       await Firebase.auth().createUserWithEmailAndPassword(email, password);
       let user = Firebase.auth().currentUser;
 
       user.updateProfile({
         displayName: name,
+        photoURL: avatar,
       });
       navigation.navigate("Root", { screen: "Me" });
     } catch (error) {

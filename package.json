@@ -17,6 +17,7 @@
     "expo-font": "~8.1.0",
     "expo-image-picker": "~8.1.0",
     "firebase": "7.9.0",
+    "md5": "^2.2.1",
     "metro": "^0.59.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
