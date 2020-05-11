@@ -7,21 +7,10 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 
-import {
-  updateEmail,
-  updatePassword,
-  login,
-  getUser,
-} from "../../../redux/actions/user";
 import Firebase from "../../../config/firebase";
 
 export default function Login({ navigation }) {
-  const dispatch = useDispatch();
-  const email = useSelector((state) => state.email);
-  const password = useSelector((state) => state.password);
-  const user = useSelector((state) => state.user);
 
   // gets the login function from actions
   // && navigates to the Profile component if login is successful
@@ -30,44 +19,24 @@ export default function Login({ navigation }) {
     navigation.navigate("Root", { screen: "Home" });
   }
 
-  // each time the component mounts
-  // we ask Firebase if the auth state has changed
-  // if there is a user, we populate the user's UID
-  // after the user's UID is populated, we navigate to the Profile component
-  useEffect(
-    () =>
-      Firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          dispatch(getUser(user.uid));
-          if (user != null) {
-            navigation.navigate("Root", { screen: "Me" });
-          }
-        }
-      }),
-    []
-  );
-
   return (
     <View style={styles.container}>
       <Text>Login.js</Text>
       <TextInput
         style={styles.inputBox}
         value={email}
-        onChangeText={(email) => dispatch(updateEmail(email))}
         placeholder="Email"
         autoCapitalize="none"
       />
       <TextInput
         style={styles.inputBox}
         value={password}
-        onChangeText={(password) => dispatch(updatePassword(password))}
         placeholder="******"
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.button} onPress={() => dispatch(login())}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      
     </View>
   );
 }

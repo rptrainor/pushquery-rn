@@ -1,25 +1,36 @@
-import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import EmailLoginBtn from "./EmailLogInBtn";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import Firebase from "../../../config/firebase";
 
 export default function LogInModal({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      await Firebase.auth().signInWithEmailAndPassword(email, password);
+      navigation.navigate("Root", { screen: "Me" });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.dismissButton}
-        onPress={() => navigation.navigate("Root", { screen: "Me" })}
-      >
-        <Text style={styles.dismissText}>X</Text>
-      </TouchableOpacity>
-      <View style={styles.buttonContainer}>
-        <Text style={styles.SignUpText}>Log in to Pushquery</Text>
-        <EmailLoginBtn navigation={navigation} />
-      </View>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => navigation.navigate("SignUpModal")}
-      >
-        <Text style={styles.loginText}>Need to creat an account? Sign up</Text>
+      <Text style={styles.header}>Sign up for Pushquery</Text>
+      <TextInput
+        style={styles.textInput}
+        onChangeText={(email) => setEmail(email)}
+        placeholder="klbouman@caltech.edu"
+      />
+      <TextInput
+        style={styles.textInput}
+        onChangeText={(password) => setPassword(password)}
+        placeholder="Password"
+        secureTextEntry={true}
+      />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>LOG IN</Text>
       </TouchableOpacity>
     </View>
   );
@@ -30,49 +41,31 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: "column",
     backgroundColor: "#fff",
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  dismissButton: {
-    marginTop: 40,
-    marginBottom: 80,
-    paddingVertical: 5,
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "yellow",
-    width: 100,
-    height: 100,
   },
-  dismissText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "gray",
-  },
-  SignUpText: {
-    backgroundColor: "#fff",
-    fontSize: 20,
-    margin: 20,
-    fontWeight: "bold",
-    color: "black",
-    textAlign: "center"
-  },
-  buttonContainer: {
-    flex: 4,
-    alignSelf: "center",
-    justifyContent: "flex-start",
-    // backgroundColor: "red",
-  },
-  loginButton: {
-    flex: 1,
+  textInput: {
     width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "gray",
+    margin: 10,
+    padding: 10,
+    fontSize: 16,
+    textAlign: "center",
+    backgroundColor: "#ddd",
+    borderRadius: 10,
   },
-  loginText: {
+  header: {
+    fontSize: 32,
+  },
+  button: {
+    width: "100%",
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "red",
+  },
+  buttonText: {
     color: "#fff",
-    padding: 15,
-    margin: 15,
-    fontSize: 16
+    textAlign: "center",
+    fontSize: 20,
   },
 });

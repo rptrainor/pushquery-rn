@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   KeyboardAvoidingView,
   Text,
@@ -7,34 +7,24 @@ import {
   View,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
+
+import { AuthContext } from "../../../../globalState";
 
 import Firebase from "../../../../config/firebase";
-import { getUser } from "../../../../redux/actions/user";
 
 export default function HostFooter() {
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  console.log({ user });
-
-  useEffect(
-    () =>
-      Firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          dispatch(getUser(user.uid));
-          if (user != null) {
-            navigation.navigate("Root", { screen: "Me" });
-          }
-        }
-      }),
-    []
-  );
+  const { isLoggedIn, currentUser } = useContext(AuthContext);
+  console.log({ currentUser });
 
   return (
     <View style={styles.container}>
       <FontAwesome5 name="user-astronaut" size={20} style={styles.userAvatar} />
       <View style={styles.textInputContainer}>
-        <Text style={styles.userName}>{user ? user.email : "username"}</Text>
+        <Text style={styles.userName}>
+          {currentUser && currentUser.displayName
+            ? currentUser.displayName
+            : ""}
+        </Text>
         <TextInput
           placeholder="What would you like to discover?"
           style={styles.textInput}

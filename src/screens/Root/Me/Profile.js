@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 
+import { AuthContext } from "../../../../globalState";
 import Firebase from "../../../../config/firebase";
-import { getUser } from "../../../../redux/actions/user";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Profile({ navigation }) {
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const { isLoggedIn, currentUser } = useContext(AuthContext);
   // Firebase signs the user out
   // && then navigates back to the Login screen
   function handleSignOut() {
@@ -18,34 +17,28 @@ export default function Profile({ navigation }) {
     });
   }
 
-  useEffect(
-    () =>
-      Firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          dispatch(getUser(user.uid));
-          if (user != null) {
-            navigation.navigate("Root", { screen: "Me" });
-          }
-        }
-      }),
-    []
-  );
-
   return (
     <>
-      {Firebase.auth().currentUser != null ? (
+      { currentUser != null ? (
         <View style={styles.container}>
-          <Text>Welcome {user ? user.email : ""}</Text>
+          <Text>
+            Welcome {currentUser && currentUser.email ? currentUser.email : ""}
+          </Text>
           <Button title="Logout" onPress={handleSignOut} />
         </View>
       ) : (
         <View style={styles.container}>
-          <Text>Sign up for Pushquery!</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("LogInModal")}
+          >
+            <Text style={styles.buttonText}>LOG IN</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("SignUpModal")}
           >
-            <Text style={styles.buttonText}>Sign up</Text>
+            <Text style={styles.buttonText}>SIGN UP</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -65,7 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     alignItems: "center",
-    backgroundColor: "#f6820d",
+    backgroundColor: "gray",
     borderColor: "#f6820d",
     borderWidth: 1,
     borderRadius: 5,

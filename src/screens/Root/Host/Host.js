@@ -51,7 +51,7 @@ function Item({ title }) {
 }
 
 export default function Host() {
-  const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
+  // const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -62,7 +62,7 @@ export default function Host() {
       />
       <KeyboardAvoidingView
         behavior="position"
-        keyboardVerticalOffset={keyboardVerticalOffset}
+        // keyboardVerticalOffset={keyboardVerticalOffset}
       >
         <HostFooter />
       </KeyboardAvoidingView>

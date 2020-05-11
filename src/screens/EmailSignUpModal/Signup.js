@@ -6,19 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 
-import { updateEmail, updatePassword, signup } from "../../../redux/actions/user";
 
 export default function Signup({ navigation }) {
-  const dispatch = useDispatch();
-  const email = useSelector((state) => state.email);
-  const password = useSelector((state) => state.email);
 
   // gets the sign up function
   // && after success navigates to the Profile component
   function handleSignUp() {
-    dispatch(signup());
     navigation.navigate("Root", { screen: 'Home' });
   }
 
@@ -27,14 +21,12 @@ export default function Signup({ navigation }) {
       <TextInput
         style={styles.inputBox}
         value={email}
-        onChangeText={(email) => dispatch(updateEmail(email))}
         placeholder="Email"
         autoCapitalize="none"
       />
       <TextInput
         style={styles.inputBox}
         value={password}
-        onChangeText={(password) => dispatch(updatePassword(password))}
         placeholder="Password"
         secureTextEntry={true}
       />
