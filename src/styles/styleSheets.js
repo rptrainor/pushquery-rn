@@ -1,0 +1,83 @@
+import Constants from "expo-constants";
+import { StyleSheet } from "react-native";
+import {
+  BACKGROUND,
+  PARAGRAPH_COLOR,
+  HIGHLIGHT_DARK,
+  WHITE,
+  PRIMARY
+} from "./colors";
+import {
+  PARAGRAPH_LINK_TEXT,
+  BUTTON_TEXT_INPUTS,
+  HEADER_TEXT,
+} from "./typography";
+
+export const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    marginTop: Constants.statusBarHeight,
+    backgroundColor: BACKGROUND,
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+  },
+  padding: {
+    margin: 10
+  },
+  header_text: {
+    fontSize: HEADER_TEXT,
+    fontFamily: "Lato",
+    color: PRIMARY,
+    fontWeight: "bold"
+  },
+  paragraph_text: {
+    fontSize: PARAGRAPH_LINK_TEXT,
+    fontFamily: "OpenSans",
+    color: PARAGRAPH_COLOR,
+  },
+  form_text_input: {
+    width: "50%",
+    padding: 5,
+    paddingLeft: 10,
+    margin: 5,
+    fontSize: BUTTON_TEXT_INPUTS,
+    color: PARAGRAPH_COLOR,
+    backgroundColor: WHITE,
+    borderRadius: 10,
+    fontFamily: "Lato",
+  },
+});
+
+export const buttons = StyleSheet.create({
+  primary_button: {
+    width: "50%",
+    borderRadius: 10,
+    backgroundColor: PRIMARY,
+    padding: 5,
+    margin: 5,
+  },
+  primary_button_text: {
+    fontSize: BUTTON_TEXT_INPUTS,
+    color: WHITE,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Lato"
+  },
+  secondary_button: {
+    width: "50%",
+    borderRadius: 10,
+    backgroundColor: "transparent",
+    borderColor: PRIMARY,
+    borderWidth: 3,
+    padding: 5,
+    margin: 5,
+  },
+  secondary_button_text: {
+    fontSize: BUTTON_TEXT_INPUTS,
+    color: PRIMARY,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Lato"
+  },
+});
