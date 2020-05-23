@@ -1,25 +1,25 @@
 import React from "react";
 import { TextInput, TouchableOpacity, Text, View } from "react-native";
 
-import { styles, buttons } from "../../styles/styleSheets";
-import Firebase from "../../../config/firebase";
+import { styles, buttons } from "../styles/styleSheets";
+import Firebase from "../../config/firebase";
 
-export default function SignUp({ navigation }) {
+export default function LogIn({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const SignUp = async () => {
+  const logIn = async () => {
     try {
-      await Firebase.auth().createUserWithEmailAndPassword(email, password);
+      await Firebase.auth().signInWithEmailAndPassword(email, password);
       navigation.navigate("Root", { screen: "Create" });
     } catch (error) {
       alert(error);
     }
   };
 
-  const NavToLogin = () => {
+  const NavToSignUp = () => {
     try {
-      navigation.navigate("Me", { screen: "Log In" });
+      navigation.navigate("Me", { screen: "Sign Up" });
     } catch (error) {
       alert(error);
     }
@@ -28,7 +28,7 @@ export default function SignUp({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.padding}>
-        <Text style={styles.header_text}>Sign Up:</Text>
+        <Text style={styles.header_text}>Log In:</Text>
       </View>
       <TextInput
         style={styles.form_text_input}
@@ -42,11 +42,11 @@ export default function SignUp({ navigation }) {
         placeholder="password"
         secureTextEntry={true}
       />
-      <TouchableOpacity style={buttons.secondary_button} onPress={SignUp}>
-        <Text style={buttons.secondary_button_text}>SIGN UP</Text>
+      <TouchableOpacity style={buttons.secondary_button} onPress={logIn}>
+        <Text style={buttons.secondary_button_text}>LOG IN</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={buttons.primary_button} onPress={NavToLogin}>
-        <Text style={buttons.primary_button_text}>LOG IN</Text>
+      <TouchableOpacity style={buttons.primary_button} onPress={NavToSignUp}>
+        <Text style={buttons.primary_button_text}>SIGN UP</Text>
       </TouchableOpacity>
     </View>
   );

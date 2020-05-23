@@ -5,7 +5,7 @@ import { styles, buttons } from "../styles/styleSheets";
 import { AuthContext } from "../../globalState";
 import Firebase from "../../config/firebase";
 
-import LogIn from "../components/organisms/LogIn";
+import LogIn from "./LogIn";
 
 export default function Profile({ navigation }) {
   const { currentUser } = React.useContext(AuthContext);

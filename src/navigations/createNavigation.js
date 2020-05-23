@@ -3,8 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { AuthContext } from "../../globalState";
 import Create from "../scenes/Create";
-import LogIn from "../components/organisms/LogIn";
-import SignUp from "../components/organisms/SignUp";
+import LogIn from "../scenes/LogIn";
+import SignUp from "../scenes/SignUp";
 
 const AuthStack = createStackNavigator();
 

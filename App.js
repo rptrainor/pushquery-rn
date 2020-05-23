@@ -10,8 +10,9 @@ import { ContextProvider } from "./globalState/providerCompose";
 
 // importing components
 import tabNavigator from "./src/navigations/tabNavigator";
-import SignUp from "./src/components/organisms/SignUp";
-import LogIn from "./src/components/organisms/LogIn";
+import SignUp from "./src/scenes/SignUp";
+import LogIn from "./src/scenes/LogIn";
+import Talk from "./src/scenes/Talk";
 
 // creating the navigator to swtich between screens
 const RootStack = createStackNavigator();
@@ -61,6 +62,11 @@ export default function App() {
             <RootStack.Screen
               name="Log In"
               component={LogIn}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="Talk"
+              component={Talk}
               options={{ headerShown: false }}
             />
           </RootStack.Navigator>

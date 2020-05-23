@@ -1,17 +1,33 @@
 import React from "react";
 import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import Firebase from "../../config/firebase";
+import { AuthContext } from "../../globalState";
 
 import { styles, buttons } from "../styles/styleSheets";
 
-export default function Create() {
+export default function Create({ navigation }) {
   const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const { currentUser } = React.useContext(AuthContext);
+  console.log(currentUser.uid);
 
   const createTalk = () => {
     const db = Firebase.firestore();
-    db.collection("talks").doc("talk").set({ title: title });
+    if (title.length > 0 && description.length > 0) {
+      db.collection("talks")
+        .add({
+          title,
+          description,
+          createdBy: currentUser.uid,
+          createdOn: new Date().getTime(),
+        })
+        .then(() => {
+          navigation.navigate("Root", { screen: "Home" });
+        });
+    }
     console.log("talk added");
-    setTitle("")
+    setTitle("");
+    setDescription("");
   };
 
   return (
@@ -23,6 +39,11 @@ export default function Create() {
         style={styles.form_text_input}
         placeholder="title"
         onChangeText={(title) => setTitle(title)}
+      />
+      <TextInput
+        style={styles.form_text_input}
+        placeholder="description"
+        onChangeText={(description) => setDescription(description)}
       />
       <TouchableOpacity style={buttons.primary_button} onPress={createTalk}>
         <Text style={buttons.primary_button_text}>CREATE</Text>

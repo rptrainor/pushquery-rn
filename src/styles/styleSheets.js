@@ -5,7 +5,7 @@ import {
   PARAGRAPH_COLOR,
   HIGHLIGHT_DARK,
   WHITE,
-  PRIMARY
+  PRIMARY,
 } from "./colors";
 import {
   PARAGRAPH_LINK_TEXT,
@@ -23,13 +23,13 @@ export const styles = StyleSheet.create({
     height: "100%",
   },
   padding: {
-    margin: 10
+    marginVertical: 10,
   },
   header_text: {
     fontSize: HEADER_TEXT,
     fontFamily: "Lato",
     color: PRIMARY,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   paragraph_text: {
     fontSize: PARAGRAPH_LINK_TEXT,
@@ -62,7 +62,7 @@ export const buttons = StyleSheet.create({
     color: WHITE,
     textAlign: "center",
     fontWeight: "bold",
-    fontFamily: "Lato"
+    fontFamily: "Lato",
   },
   secondary_button: {
     width: "50%",
@@ -78,6 +78,26 @@ export const buttons = StyleSheet.create({
     color: PRIMARY,
     textAlign: "center",
     fontWeight: "bold",
-    fontFamily: "Lato"
+    fontFamily: "Lato",
+  },
+});
+
+export const talkCover = StyleSheet.create({
+  container: {
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+    alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 });
