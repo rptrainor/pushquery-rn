@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
@@ -75,5 +74,3 @@ export default function App() {
     );
   }
 }
-
-const styles = StyleSheet.create({});

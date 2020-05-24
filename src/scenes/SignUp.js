@@ -34,6 +34,7 @@ export default function SignUp({ navigation }) {
         style={styles.form_text_input}
         onChangeText={(email) => setEmail(email)}
         placeholder="email"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.form_text_input}
@@ -41,6 +42,7 @@ export default function SignUp({ navigation }) {
         onChangeText={(password) => setPassword(password)}
         placeholder="password"
         secureTextEntry={true}
+        autoCapitalize="none"
       />
       <TouchableOpacity style={buttons.secondary_button} onPress={SignUp}>
         <Text style={buttons.secondary_button_text}>SIGN UP</Text>

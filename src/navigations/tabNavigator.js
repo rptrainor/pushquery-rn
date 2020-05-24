@@ -5,10 +5,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import { BACKGROUND, INACTIVE_ICON_GRAY } from "../styles/colors";
 
 // importing components
-import Home from "../scenes/Home";
 import createNavigation from "./createNavigation";
 import authNavigator from "./authNavigator";
-import Talk from "../scenes/Talk";
 import homeNavigator from "./homeNavigator";
 // pulling out the bottom tab navigator from react-navigation
 const Tab = createBottomTabNavigator();

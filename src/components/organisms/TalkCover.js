@@ -4,11 +4,9 @@ import { styles, talkCover } from "../../styles/styleSheets";
 
 export default function TalkCover({ talk, navigation }) {
   const navToTalk = () => {
-    navigation.navigate("Talk", {
-      params: { talk },
-    });
+    navigation.navigate('Talk', { talk });
   };
-
+  
   return (
     <View style={talkCover.container}>
       <TouchableOpacity onPress={navToTalk}>

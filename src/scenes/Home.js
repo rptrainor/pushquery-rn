@@ -5,7 +5,7 @@ import TalkCover from "../components/organisms/TalkCover";
 import { styles } from "../styles/styleSheets";
 import Firebase from "../../config/firebase";
 
-export default function Home({ navigation,  }) {
+export default function Home({ navigation, route }) {
   const [talks, setTalks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   // console.log({ talks });
@@ -33,7 +33,6 @@ export default function Home({ navigation,  }) {
 
     return () => unsubscribe();
   }, []);
-
 
   if (loading) return <Text>loading...</Text>;
   return (

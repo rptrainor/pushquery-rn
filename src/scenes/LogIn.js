@@ -34,12 +34,14 @@ export default function LogIn({ navigation }) {
         style={styles.form_text_input}
         onChangeText={(email) => setEmail(email)}
         placeholder="email"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.form_text_input}
         style={styles.form_text_input}
         onChangeText={(password) => setPassword(password)}
         placeholder="password"
+        autoCapitalize="none"
         secureTextEntry={true}
       />
       <TouchableOpacity style={buttons.secondary_button} onPress={logIn}>
