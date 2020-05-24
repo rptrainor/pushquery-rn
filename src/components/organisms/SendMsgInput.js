@@ -5,25 +5,21 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { PRIMARY, WHITE } from "../../styles/colors";
 import { BUTTON_TEXT_INPUTS } from "../../styles/typography";
 
-export default function SendMsgInput({ currentUser, handleMsgSend }) {
-  console.log({ currentUser });
-
+export default function SendMsgInput({
+  currentUser,
+  handleMsgSend,
+  setInputText,
+  inputText,
+}) {
   return (
     <View style={sendMsgStyles.container}>
-      <FontAwesome5
-        name="user-astronaut"
-        size={17}
-        style={sendMsgStyles.userAvatar}
-      />
       <View style={sendMsgStyles.textInputContainer}>
-        <Text style={sendMsgStyles.userName}>
-          {currentUser && currentUser.displayName
-            ? currentUser.displayName
-            : ""}
-        </Text>
         <TextInput
           style={sendMsgStyles.textInput}
           placeholder="What would you like to discover?"
+          onChangeText={(inputText) => setInputText(inputText)}
+          value={inputText}
+          clearButtonMode="always"
         />
       </View>
       <TouchableOpacity style={sendMsgStyles.button} onPress={handleMsgSend}>
@@ -53,9 +49,10 @@ export const sendMsgStyles = StyleSheet.create({
   textInput: {
     backgroundColor: "#eee",
     borderRadius: 10,
-    fontSize: 17,
-    paddingVertical: 2,
-    paddingHorizontal: 5,
+    fontSize: 20,
+    marginHorizontal: 5,
+    marginVertical: 10,
+    paddingVertical: 7,
   },
   userName: {},
   button: {
