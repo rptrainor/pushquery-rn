@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { styles, talkCover } from "../../styles/styleSheets";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { styles } from "../../styles/styleSheets";
 
 export default function TalkCover({ talk, navigation }) {
   const navToTalk = () => {
-    navigation.navigate('Talk', { talk });
+    navigation.navigate("Talk", { talk });
   };
-  
+
   return (
     <View style={talkCover.container}>
       <TouchableOpacity onPress={navToTalk}>
@@ -18,3 +18,24 @@ export default function TalkCover({ talk, navigation }) {
     </View>
   );
 }
+
+const talkCover = StyleSheet.create({
+  container: {
+    width: "95%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+    alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  title: {},
+});

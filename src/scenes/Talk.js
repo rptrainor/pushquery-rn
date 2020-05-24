@@ -10,11 +10,13 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import formatDistance from "date-fns/formatDistance";
 
 import { AuthContext } from "../../globalState";
-import { BACKGROUND } from "../styles/colors";
+import { BACKGROUND, PRIMARY } from "../styles/colors";
 import Firebase from "../../config/firebase";
 import SendMsgInput from "../components/organisms/SendMsgInput";
+import TalkMsg from "../components/organisms/TalkMsg";
 
 export default function Talk({ navigation, route }) {
   const { currentUser } = React.useContext(AuthContext);
@@ -24,7 +26,11 @@ export default function Talk({ navigation, route }) {
   const keyboardVerticalOffset = Platform.OS === "ios" ? 20 : 0;
 
   const talkId = route.params.talk._id;
-  console.log({ messages });
+
+  const talkDescription = route.params.talk.description;
+  const talkCreatedAt = route.params.talk.createdOn;
+  const howLongAgo = formatDistance(Date.now(), talkCreatedAt, []);
+  // console.log({ howLongAgo });
 
   React.useEffect(() => {
     const messageListener = Firebase.firestore()
@@ -86,15 +92,16 @@ export default function Talk({ navigation, route }) {
   };
   return (
     <View style={talkStyles.container}>
-      <TouchableOpacity style={talkStyles.backBtn} onPress={returnToMainHome}>
-        <Ionicons name="ios-arrow-back" size={24} color="black" />
-      </TouchableOpacity>
-
+      <View style={talkStyles.backBtn}>
+        <TouchableOpacity style={talkStyles.backBtn} onPress={returnToMainHome}>
+          <Ionicons name="ios-arrow-back" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={talkStyles.title}>{route.params.talk.title}</Text>
+      </View>
       <FlatList
         data={messages}
-        renderItem={({ item }) => <Text>{item.text}</Text>}
         keyExtractor={(item) => item._id}
-        style={talkStyles.flatList}
+        renderItem={({ item }) => <TalkMsg item={item} />}
       />
       <KeyboardAvoidingView
         behavior="position"
@@ -124,9 +131,20 @@ const talkStyles = StyleSheet.create({
     backgroundColor: "#F2EEE4",
   },
   backBtn: {
-    width: "90%",
     marginTop: 5,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
+    marginHorizontal: 5,
+    paddingHorizontal: 3,
+  },
+  title: {
+    fontFamily: "Lato",
+    fontWeight: "bold",
+    fontSize: 17,
+    flexWrap: "wrap",
+    marginHorizontal: 5,
+    paddingHorizontal: 3,
+    color: PRIMARY,
   },
 });

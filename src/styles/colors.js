@@ -11,8 +11,8 @@ export const BACKGROUND = "#F2EEE4";
 
 // GRAYSCALE
 // export const GRAY_LIGHT = "#e6e6e6";
-// export const GRAY_MEDIUM = "#cacaca";
-// export const GRAY_DARK = "#8a8a8a";
+export const GRAY_MEDIUM = "#cacaca";
+export const GRAY_DARK = "#8a8a8a";
 export const INACTIVE_ICON_GRAY = "#666666";
 export const WHITE = "#ffffff";
 

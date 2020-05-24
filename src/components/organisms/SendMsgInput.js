@@ -20,6 +20,7 @@ export default function SendMsgInput({
           onChangeText={(inputText) => setInputText(inputText)}
           value={inputText}
           clearButtonMode="always"
+          multiline={true}
         />
       </View>
       <TouchableOpacity style={sendMsgStyles.button} onPress={handleMsgSend}>
