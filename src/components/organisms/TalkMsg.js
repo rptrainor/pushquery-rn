@@ -5,7 +5,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { PRIMARY, GRAY_DARK } from "../../styles/colors";
 
 export default function TalkMsg({ item }) {
-  //   console.log({ item });
   const msgCreatedAt = item.createdAt;
   const howLongAgo = formatDistance(Date.now(), msgCreatedAt, []);
 

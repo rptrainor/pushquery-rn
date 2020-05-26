@@ -30,7 +30,6 @@ export default function Talk({ navigation, route }) {
   const talkDescription = route.params.talk.description;
   const talkCreatedAt = route.params.talk.createdOn;
   const howLongAgo = formatDistance(Date.now(), talkCreatedAt, []);
-  // console.log({ howLongAgo });
 
   React.useEffect(() => {
     const messageListener = Firebase.firestore()
@@ -67,22 +66,30 @@ export default function Talk({ navigation, route }) {
 
   const handleMsgSend = async () => {
     const text = inputText;
+    if (inputText.length > 0) {
+      if (currentUser) {
+        await Firebase.firestore()
+          .collection("talks")
+          .doc(talkId)
+          .collection("messages")
+          .add({
+            text,
+            createdAt: new Date().getTime(),
+            user: {
+              _id: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName,
+            },
+          });
 
-    await Firebase.firestore()
-      .collection("talks")
-      .doc(talkId)
-      .collection("messages")
-      .add({
-        text,
-        createdAt: new Date().getTime(),
-        user: {
-          _id: currentUser.uid,
-          email: currentUser.email,
-          displayName: currentUser.displayName,
-        },
-      });
-
-    await setInputText("");
+        await setInputText("");
+      } else {
+        alert("You Me Be Logged In To Comment");
+        navigation.navigate("Me");
+      }
+    } else {
+      alert("Please Type A Comment Before Pressing Send");
+    }
   };
 
   const returnToMainHome = () => {
@@ -92,6 +99,7 @@ export default function Talk({ navigation, route }) {
   };
   return (
     <View style={talkStyles.container}>
+      <View style={talkStyles.statusBarView} />
       <View style={talkStyles.backBtn}>
         <TouchableOpacity style={talkStyles.backBtn} onPress={returnToMainHome}>
           <Ionicons name="ios-arrow-back" size={24} color="black" />
@@ -104,8 +112,9 @@ export default function Talk({ navigation, route }) {
         renderItem={({ item }) => <TalkMsg item={item} />}
       />
       <KeyboardAvoidingView
-        behavior="position"
-        keyboardVerticalOffset={keyboardVerticalOffset}
+        behavior="padding"
+        enabled
+        // keyboardVerticalOffset={keyboardVerticalOffset}
       >
         <SendMsgInput
           currentUser={currentUser}
@@ -120,18 +129,19 @@ export default function Talk({ navigation, route }) {
 
 const talkStyles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
     flex: 2,
   },
   flatList: {
-    width: "100%",
+    width: "50%",
     backgroundColor: "#F2EEE4",
   },
   backBtn: {
     marginTop: 5,
+    marginLeft: 8,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
@@ -146,5 +156,10 @@ const talkStyles = StyleSheet.create({
     marginHorizontal: 5,
     paddingHorizontal: 3,
     color: PRIMARY,
+  },
+  statusBarView: {
+    height: Constants.statusBarHeight,
+    backgroundColor: BACKGROUND,
+    width: "100%",
   },
 });

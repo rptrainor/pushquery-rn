@@ -1,5 +1,11 @@
 import React from "react";
-import { TextInput, TouchableOpacity, Text, View } from "react-native";
+import {
+  TextInput,
+  TouchableOpacity,
+  Text,
+  View,
+  KeyboardAvoidingView,
+} from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
 import Firebase from "../../config/firebase";

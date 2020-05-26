@@ -16,7 +16,7 @@ import {
 export const styles = StyleSheet.create({
   container: {
     display: "flex",
-    marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
@@ -46,6 +46,11 @@ export const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderRadius: 10,
     fontFamily: "Lato",
+  },
+  statusBarView: {
+    height: Constants.statusBarHeight,
+    backgroundColor: BACKGROUND,
+    width: "100%",
   },
 });
 

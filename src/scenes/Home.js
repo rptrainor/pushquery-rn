@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  StatusBar,
+} from "react-native";
 
 import TalkCover from "../components/organisms/TalkCover";
 import { styles } from "../styles/styleSheets";
@@ -8,7 +14,7 @@ import Firebase from "../../config/firebase";
 export default function Home({ navigation, route }) {
   const [talks, setTalks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  // console.log({ talks });
+
   React.useEffect(() => {
     const unsubscribe = Firebase.firestore()
       .collection("talks")
@@ -34,16 +40,25 @@ export default function Home({ navigation, route }) {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <Text>loading...</Text>;
+  if (loading)
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator />
+      </View>
+    );
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={talks}
-        keyExtractor={(talk) => talk._id}
-        renderItem={({ item }) => (
-          <TalkCover talk={item} navigation={navigation} />
-        )}
-      />
+    <View>
+      <View style={styles.statusBarView} />
+      <View style={styles.container}>
+        <StatusBar hidden={true} />
+        <FlatList
+          data={talks}
+          keyExtractor={(talk) => talk._id}
+          renderItem={({ item }) => (
+            <TalkCover talk={item} navigation={navigation} />
+          )}
+        />
+      </View>
     </View>
   );
 }
