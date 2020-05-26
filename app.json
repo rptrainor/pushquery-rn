@@ -1,15 +1,17 @@
 {
   "expo": {
-    "name": "pushquery-rn",
-    "slug": "pushquery-rn",
+    "name": "pushquery",
+    "slug": "pushquery",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "primaryColor": "#009900",
+    "backgroundColor": "#F2EEE4",
     "splash": {
       "image": "./assets/PqSplashScreen.png",
       "resizeMode": "contain",
@@ -22,7 +24,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "pushquery",
+      "icon": "./assets/icon.png",
+      "backgroundColor": "#F2EEE4"
     }
   }
 }
