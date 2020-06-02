@@ -44,39 +44,42 @@ export default function Report({ route, navigation }) {
     }
   }, [route]);
   
-  const handleSubmit = async () => {
-    if (type == "talk" && wantToReport) {
-      await Firebase.firestore()
-        .collection("talks")
-        .doc(ID)
-        .collection("flags")
-        .add({
-          reportedAt: new Date().getTime(),
-          complaint,
-          user: {
-            _id: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName,
-          },
-        });
-    }
-    if (type == "comment" && wantToReport) {
-      await Firebase.firestore()
-        .collection("messages")
-        .doc(ID)
-        .add({
-          reportedAt: new Date().getTime(),
-          complaint,
-          user: {
-            _id: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName,
-          },
-        });
-    }
-    if (wantToBlock) {
-    }
-  };
+  // const handleSubmit = async () => {
+  //   if (type == "talk" && wantToReport) {
+  //     await Firebase.firestore()
+  //       .collection("talks")
+  //       .doc(ID)
+  //       .collection("flags")
+  //       .add({
+  //         reportedAt: new Date().getTime(),
+  //         complaint,
+  //         user: {
+  //           _id: currentUser.uid,
+  //           email: currentUser.email,
+  //           displayName: currentUser.displayName,
+  //         },
+  //       });
+  //   }
+  //   if (type == "comment" && wantToReport) {
+  //     await Firebase.firestore()
+  //       .collection("messages")
+  //       .doc(ID)
+  //       .add({
+  //         reportedAt: new Date().getTime(),
+  //         complaint,
+  //         user: {
+  //           _id: currentUser.uid,
+  //           email: currentUser.email,
+  //           displayName: currentUser.displayName,
+  //         },
+  //       });
+  //   }
+  //   if (wantToBlock) {
+  //     Firebase.auth().currentUser.updateProfile({
+  //       blocking: [...]
+  //     })
+  //   }
+  // };
   console.log(complaint);
 
   return (

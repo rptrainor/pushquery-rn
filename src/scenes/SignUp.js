@@ -3,6 +3,7 @@ import { TextInput, TouchableOpacity, Text, View } from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
 import Firebase from "../../config/firebase";
+import { PRIMARY } from "../styles/colors";
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -11,12 +12,24 @@ export default function SignUp({ navigation }) {
 
   const SignUp = async () => {
     try {
-      await Firebase.auth().createUserWithEmailAndPassword(email, password);
+      const { uid } = await Firebase.auth().createUserWithEmailAndPassword(
+        email,
+        password
+      );
       await Firebase.auth().currentUser.updateProfile({
         displayName,
         photoURL:
           "https://res.cloudinary.com/dx35aw3ub/image/upload/v1591064978/icon_prufa1.png",
       });
+      await Firebase.firestore()
+        .collection("users")
+        .doc(Firebase.auth().currentUser.uid)
+        .set({
+          createdAt: new Date().getTime(),
+          email: Firebase.auth().currentUser.email,
+          displayName: Firebase.auth().currentUser.displayName,
+          photoURL: Firebase.auth().currentUser.photoURL,
+        });
       await navigation.navigate("Root", { screen: "Create" });
     } catch (error) {
       alert(error);
