@@ -43,44 +43,50 @@ export default function Report({ route, navigation }) {
       setUserIdToReport(route.params.userIdToReport);
     }
   }, [route]);
-  
-  // const handleSubmit = async () => {
-  //   if (type == "talk" && wantToReport) {
-  //     await Firebase.firestore()
-  //       .collection("talks")
-  //       .doc(ID)
-  //       .collection("flags")
-  //       .add({
-  //         reportedAt: new Date().getTime(),
-  //         complaint,
-  //         user: {
-  //           _id: currentUser.uid,
-  //           email: currentUser.email,
-  //           displayName: currentUser.displayName,
-  //         },
-  //       });
-  //   }
-  //   if (type == "comment" && wantToReport) {
-  //     await Firebase.firestore()
-  //       .collection("messages")
-  //       .doc(ID)
-  //       .add({
-  //         reportedAt: new Date().getTime(),
-  //         complaint,
-  //         user: {
-  //           _id: currentUser.uid,
-  //           email: currentUser.email,
-  //           displayName: currentUser.displayName,
-  //         },
-  //       });
-  //   }
-  //   if (wantToBlock) {
-  //     Firebase.auth().currentUser.updateProfile({
-  //       blocking: [...]
-  //     })
-  //   }
-  // };
-  console.log(complaint);
+
+  const handleSubmit = async () => {
+    if (type == "talk" && wantToReport) {
+      await Firebase.firestore()
+        .collection("talks")
+        .doc(ID)
+        .collection("flags")
+        .add({
+          reportedAt: new Date().getTime(),
+          complaint,
+          userWhoFiledComplaint: {
+            _id: currentUser.uid,
+          },
+        });
+    }
+    if (type == "comment" && wantToReport) {
+      await Firebase.firestore()
+        .collection("talks")
+        .doc(route.params.talkId)
+        .collection("messages")
+        .doc(ID)
+        .collection("flags")
+        .add({
+          reportedAt: new Date().getTime(),
+          complaint,
+          user: {
+            _id: currentUser.uid,
+          },
+        });
+    }
+    if (wantToBlock) {
+      await Firebase.firestore()
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("blockedUsers")
+        .add({
+          blockedUsersID: userIdToReport,
+        });
+    }
+    alert(
+      "Thank you for your report.  We have taken the actions you specified and will be following up with your filed report."
+    );
+    navigation.goBack();
+  };
 
   return (
     <View>

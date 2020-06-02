@@ -31,6 +31,9 @@ export default function Talk({ navigation, route }) {
   const talkCreatedAt = route.params.talk.createdOn;
   const howLongAgo = formatDistance(Date.now(), talkCreatedAt, []);
 
+  // console.log({talkId});
+  
+
   React.useEffect(() => {
     const messageListener = Firebase.firestore()
       .collection("talks")
@@ -111,7 +114,7 @@ export default function Talk({ navigation, route }) {
         data={messages}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <TalkMsg navigation={navigation} item={item} />
+          <TalkMsg navigation={navigation} item={item} talkId={talkId} />
         )}
       />
       <KeyboardAvoidingView

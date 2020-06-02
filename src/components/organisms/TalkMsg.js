@@ -5,7 +5,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { PRIMARY, GRAY_DARK } from "../../styles/colors";
 
-export default function TalkMsg({ item, navigation }) {
+export default function TalkMsg({ item, navigation, talkId }) {
   const msgCreatedAt = item.createdAt;
   const howLongAgo = formatDistance(Date.now(), msgCreatedAt, []);
 
@@ -14,9 +14,11 @@ export default function TalkMsg({ item, navigation }) {
       id: item._id,
       type: "comment",
       displayName: item.user.displayName,
-      userIdToReport: item.user._id
+      userIdToReport: item.user._id,
+      talkId
     });
   };
+
   
   return (
     <View style={msgStyles.container}>
