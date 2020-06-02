@@ -79,6 +79,7 @@ export default function Talk({ navigation, route }) {
               _id: currentUser.uid,
               email: currentUser.email,
               displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL
             },
           });
 

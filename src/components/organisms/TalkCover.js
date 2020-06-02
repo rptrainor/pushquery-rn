@@ -13,8 +13,10 @@ export default function TalkCover({ talk, navigation }) {
       id: talk._id,
       type: "talk",
       displayName: talk.user.displayName,
+      userIdToReport: talk.user._id
     });
   };
+  
 
   return (
     <View style={talkCover.container}>
@@ -30,7 +32,10 @@ export default function TalkCover({ talk, navigation }) {
         <View style={styles.padding}>
           <Text style={styles.header_text}>{talk.title}</Text>
         </View>
-        <Text style={styles.paragraph_text}>{talk.description}</Text>
+        <Text style={styles.paragraph_text}
+        numberOfLines={10}
+        ellipsizeMode="tail"
+        >{talk.description}</Text>
       </TouchableOpacity>
     </View>
   );

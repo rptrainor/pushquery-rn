@@ -32,6 +32,22 @@ export default function Create({ navigation }) {
             photoURL: currentUser.photoURL
           },
         })
+        .then( async (docRef) => {
+          await Firebase.firestore()
+          .collection("talks")
+          .doc(docRef.id)
+          .collection("messages")
+          .add({
+            text: description,
+            createdAt: new Date().getTime(),
+            user: {
+              _id: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName,
+            },
+          });
+
+        })
         .then(() => {
           setTitle("");
           setDescription("");

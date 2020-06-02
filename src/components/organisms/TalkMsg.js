@@ -14,8 +14,10 @@ export default function TalkMsg({ item, navigation }) {
       id: item._id,
       type: "comment",
       displayName: item.user.displayName,
+      userIdToReport: item.user._id
     });
   };
+  
   return (
     <View style={msgStyles.container}>
       <FontAwesome5 name="user-astronaut" size={17} style={msgStyles.avatar} />
