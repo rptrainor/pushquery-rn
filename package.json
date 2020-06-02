@@ -8,7 +8,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo/next-adapter": "^2.1.10",
     "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/bottom-tabs": "^5.2.7",
     "@react-navigation/material-bottom-tabs": "^5.2.5",
@@ -18,7 +17,6 @@
     "expo": "~37.0.3",
     "expo-constants": "~9.0.0",
     "expo-font": "~8.1.0",
-    "expo-image-picker": "~8.1.0",
     "firebase": "7.9.0",
     "md5": "^2.2.1",
     "metro": "^0.59.0",
@@ -31,10 +29,7 @@
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
-    "react-native-web": "~0.11.7",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "react-native-web": "~0.11.7"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

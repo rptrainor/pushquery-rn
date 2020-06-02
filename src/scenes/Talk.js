@@ -109,7 +109,9 @@ export default function Talk({ navigation, route }) {
       <FlatList
         data={messages}
         keyExtractor={(item) => item._id}
-        renderItem={({ item }) => <TalkMsg item={item} />}
+        renderItem={({ item }) => (
+          <TalkMsg navigation={navigation} item={item} />
+        )}
       />
       <KeyboardAvoidingView
         behavior="padding"

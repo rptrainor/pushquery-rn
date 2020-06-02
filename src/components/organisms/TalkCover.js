@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Entypo } from "@expo/vector-icons";
 import { styles } from "../../styles/styleSheets";
 
 export default function TalkCover({ talk, navigation }) {
@@ -7,8 +8,24 @@ export default function TalkCover({ talk, navigation }) {
     navigation.navigate("Talk", { talk });
   };
 
+  const handleReport = () => {
+    navigation.navigate("Report", {
+      id: talk._id,
+      type: "talk",
+      displayName: talk.user.displayName,
+    });
+  };
+
   return (
     <View style={talkCover.container}>
+      <TouchableOpacity onPress={handleReport}>
+        <Entypo
+          name="dots-three-vertical"
+          size={15}
+          color="black"
+          style={talkCover.reportBtn}
+        />
+      </TouchableOpacity>
       <TouchableOpacity onPress={navToTalk}>
         <View style={styles.padding}>
           <Text style={styles.header_text}>{talk.title}</Text>
@@ -37,5 +54,9 @@ const talkCover = StyleSheet.create({
 
     elevation: 5,
   },
-  title: {},
+  reportBtn: {
+    display: "flex",
+    width: "100%",
+    textAlign: "right",
+  },
 });

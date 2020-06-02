@@ -1,5 +1,11 @@
 import React from "react";
-import { View, TextInput, Text, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+} from "react-native";
 import Firebase from "../../config/firebase";
 import { AuthContext } from "../../globalState";
 
@@ -19,13 +25,19 @@ export default function Create({ navigation }) {
           description,
           createdBy: currentUser.uid,
           createdOn: new Date().getTime(),
+          user: {
+            _id: currentUser.uid,
+            email: currentUser.email,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL
+          },
         })
         .then(() => {
+          setTitle("");
+          setDescription("");
           navigation.navigate("Root", { screen: "Home" });
         });
     }
-    setTitle("");
-    setDescription("");
   };
 
   return (

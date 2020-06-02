@@ -19,15 +19,27 @@ export default function Home({ navigation, route }) {
     const unsubscribe = Firebase.firestore()
       .collection("talks")
       .onSnapshot((querySnapshot) => {
-        const talks = querySnapshot.docs.map((documentSnapshot) => {
-          return {
-            _id: documentSnapshot.id,
+        const talks = querySnapshot.docs.map((doc) => {
+          const firebaseData = doc.data();
+
+          const data = {
+            _id: doc.id,
             title: "",
             description: "",
             createdBy: "",
             createdOn: "",
-            ...documentSnapshot.data(),
+            ...firebaseData,
           };
+
+          if (!firebaseData.system) {
+            data.user = {
+              ...firebaseData.user,
+              email: firebaseData.user.email,
+              displayName: firebaseData.user.displayName,
+            };
+          }
+
+          return data;
         });
 
         setTalks(talks);

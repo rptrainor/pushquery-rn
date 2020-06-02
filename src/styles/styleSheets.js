@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Lato",
     color: PRIMARY,
     fontWeight: "bold",
+    margin: 5
   },
   paragraph_text: {
     fontSize: PARAGRAPH_LINK_TEXT,
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
     color: PARAGRAPH_COLOR,
   },
   form_text_input: {
-    width: "50%",
+    width: "100%",
     padding: 5,
     paddingLeft: 10,
     margin: 5,
@@ -56,7 +57,7 @@ export const styles = StyleSheet.create({
 
 export const buttons = StyleSheet.create({
   primary_button: {
-    width: "50%",
+    width: "100%",
     borderRadius: 10,
     backgroundColor: PRIMARY,
     padding: 5,
@@ -70,7 +71,7 @@ export const buttons = StyleSheet.create({
     fontFamily: "Lato",
   },
   secondary_button: {
-    width: "50%",
+    width: "100%",
     borderRadius: 10,
     backgroundColor: "transparent",
     borderColor: PRIMARY,

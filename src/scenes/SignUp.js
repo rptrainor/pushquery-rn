@@ -7,11 +7,17 @@ import Firebase from "../../config/firebase";
 export default function SignUp({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
 
   const SignUp = async () => {
     try {
       await Firebase.auth().createUserWithEmailAndPassword(email, password);
-      navigation.navigate("Root", { screen: "Create" });
+      await Firebase.auth().currentUser.updateProfile({
+        displayName,
+        photoURL:
+          "https://res.cloudinary.com/dx35aw3ub/image/upload/v1591064978/icon_prufa1.png",
+      });
+      await navigation.navigate("Root", { screen: "Create" });
     } catch (error) {
       alert(error);
     }
@@ -35,6 +41,11 @@ export default function SignUp({ navigation }) {
         onChangeText={(email) => setEmail(email)}
         placeholder="email"
         autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.form_text_input}
+        onChangeText={(displayName) => setDisplayName(displayName)}
+        placeholder="display name"
       />
       <TextInput
         style={styles.form_text_input}
