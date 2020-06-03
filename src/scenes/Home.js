@@ -18,6 +18,7 @@ export default function Home({ navigation, route }) {
   React.useEffect(() => {
     const unsubscribe = Firebase.firestore()
       .collection("talks")
+      .where("flag.flagged", "==", false)
       .onSnapshot((querySnapshot) => {
         const talks = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();

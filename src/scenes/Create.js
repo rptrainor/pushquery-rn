@@ -10,48 +10,61 @@ import Firebase from "../../config/firebase";
 import { AuthContext } from "../../globalState";
 
 import { styles, buttons } from "../styles/styleSheets";
+import { FlatList } from "react-native-gesture-handler";
 
 export default function Create({ navigation }) {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const { currentUser } = React.useContext(AuthContext);
+  const { currentUser, isBlocked } = React.useContext(AuthContext);
 
   const createTalk = () => {
     const db = Firebase.firestore();
-    if (title.length > 0 && description.length > 0) {
-      db.collection("talks")
-        .add({
-          title,
-          description,
-          createdBy: currentUser.uid,
-          createdOn: new Date().getTime(),
-          user: {
-            _id: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-          },
-        })
-        .then(async (docRef) => {
-          await Firebase.firestore()
-            .collection("talks")
-            .doc(docRef.id)
-            .collection("messages")
-            .add({
-              text: description,
-              createdAt: new Date().getTime(),
-              user: {
-                _id: currentUser.uid,
-                email: currentUser.email,
-                displayName: currentUser.displayName,
-              },
-            });
-        })
-        .then(() => {
-          setTitle("");
-          setDescription("");
-          navigation.navigate("Root", { screen: "Home" });
-        });
+    if (!isBlocked) {
+      if (title.length > 0 && description.length > 0) {
+        db.collection("talks")
+          .add({
+            title,
+            description,
+            createdBy: currentUser.uid,
+            createdOn: new Date().getTime(),
+            flag: {
+              flagged: false,
+            },
+            user: {
+              _id: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            },
+          })
+          .then(async (docRef) => {
+            await Firebase.firestore()
+              .collection("talks")
+              .doc(docRef.id)
+              .collection("messages")
+              .add({
+                text: description,
+                createdAt: new Date().getTime(),
+                flag: {
+                  flagged: false,
+                },
+                user: {
+                  _id: currentUser.uid,
+                  email: currentUser.email,
+                  displayName: currentUser.displayName,
+                },
+              });
+          })
+          .then(() => {
+            setTitle("");
+            setDescription("");
+            navigation.navigate("Root", { screen: "Home" });
+          });
+      }
+    } else {
+      alert(
+        "We are sorry, one of your posts has been flagged by our community. We are in the process of reviewing this flag, but until then you will not be allowed to host a Talk.  We appreciate your patience and will email you with more details about this review shortly. Thank you"
+      );
     }
   };
 

@@ -19,7 +19,7 @@ import SendMsgInput from "../components/organisms/SendMsgInput";
 import TalkMsg from "../components/organisms/TalkMsg";
 
 export default function Talk({ navigation, route }) {
-  const { currentUser, blockedUserList } = React.useContext(AuthContext);
+  const { currentUser } = React.useContext(AuthContext);
   const [messages, setMessages] = React.useState([]);
   const [inputText, setInputText] = React.useState("");
 
@@ -36,7 +36,8 @@ export default function Talk({ navigation, route }) {
       .collection("talks")
       .doc(talkId)
       .collection("messages")
-      .orderBy("createdAt", "asc")
+      .where("flag.flagged", "==", false)
+      // .orderBy("createdAt", "asc")
       .onSnapshot((querySnapshot) => {
         const messages = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
@@ -45,6 +46,9 @@ export default function Talk({ navigation, route }) {
             _id: doc.id,
             text: "",
             createdAt: new Date().getTime(),
+            flag: {
+              flagged: false,
+            },
             ...firebaseData,
           };
 
@@ -58,50 +62,46 @@ export default function Talk({ navigation, route }) {
 
           return data;
         });
-
         setMessages(messages);
       });
     return () => messageListener();
   }, []);
 
-  // const filterForBlockedUserContent = () => {
-  //   const filteredMessageList = [];
-  //   blockedUserList.forEach((e1) =>
-  //     messages.forEach((e2) => {
-  //       if (e1 !== e2) {
-  //         filteredMessageList.push(e2);
-  //       }
-  //     })
-  //   );
-  //   return filter
-  // };
-
   const handleMsgSend = async () => {
     const text = inputText;
-    if (inputText.length > 0) {
-      if (currentUser) {
-        await Firebase.firestore()
-          .collection("talks")
-          .doc(talkId)
-          .collection("messages")
-          .add({
-            text,
-            createdAt: new Date().getTime(),
-            user: {
-              _id: currentUser.uid,
-              email: currentUser.email,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-            },
-          });
+    if (!isBlocked) {
+      if (inputText.length > 0) {
+        if (currentUser) {
+          await Firebase.firestore()
+            .collection("talks")
+            .doc(talkId)
+            .collection("messages")
+            .add({
+              text,
+              createdAt: new Date().getTime(),
+              flag: {
+                flagged: false,
+              },
+              user: {
+                _id: currentUser.uid,
+                email: currentUser.email,
+                displayName: currentUser.displayName,
+                photoURL: currentUser.photoURL,
+              },
+            });
 
-        await setInputText("");
+          await setInputText("");
+        } else {
+          alert("You Me Be Logged In To Comment");
+          navigation.navigate("Me");
+        }
       } else {
-        alert("You Me Be Logged In To Comment");
-        navigation.navigate("Me");
+        alert("Please Type A Comment Before Pressing Send");
       }
     } else {
-      alert("Please Type A Comment Before Pressing Send");
+      alert(
+        "We are sorry, one of your posts has been flagged by our community. We are in the process of reviewing this flag, but until then you will not be allowed to ask a question.  We appreciate your patience and will email you with more details about this review shortly. Thank you"
+      );
     }
   };
 

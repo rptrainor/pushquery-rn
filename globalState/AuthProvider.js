@@ -5,42 +5,28 @@ export const AuthContext = createContext();
 
 export function AuthProvider(props) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [blockedUserList, setBlockedUserList] = useState([]);
+  const [isBlocked, setIsBlocked] = useState(false);
 
   useEffect(() => {
     Firebase.auth().onAuthStateChanged(setCurrentUser);
     if (currentUser) {
-      const blockedUserListener = Firebase.firestore()
+      Firebase.firestore()
         .collection("users")
         .doc(currentUser.uid)
-        .collection("blockedUsers")
-        .onSnapshot((querySnapshot) => {
-          const blockedUsers = querySnapshot.docs.map((doc) => {
-            const firebaseData = doc.data();
-
-            const data = {
-              // id: doc.id,
-              blockedUsersID: "",
-              ...firebaseData,
-            };
-            return data;
-          });
-          setBlockedUserList(blockedUsers);
+        .get()
+        .then((doc) => {
+          if (doc.data().flag.flagged === true) {
+            setIsBlocked(true);
+          }
         });
-    } else {
-      setBlockedUserList([]);
     }
   }, [currentUser]);
-
-  console.log({ blockedUserList });
 
   return (
     <AuthContext.Provider
       value={{
         currentUser,
-        isLoggedIn,
-        blockedUserList,
+        isBlocked,
       }}
     >
       {props.children}

@@ -29,6 +29,9 @@ export default function SignUp({ navigation }) {
           email: Firebase.auth().currentUser.email,
           displayName: Firebase.auth().currentUser.displayName,
           photoURL: Firebase.auth().currentUser.photoURL,
+          flag: {
+            flagged: false,
+          },
         });
       await navigation.navigate("Root", { screen: "Create" });
     } catch (error) {

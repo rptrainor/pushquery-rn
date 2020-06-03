@@ -49,12 +49,14 @@ export default function Report({ route, navigation }) {
       await Firebase.firestore()
         .collection("talks")
         .doc(ID)
-        .collection("flags")
-        .add({
-          reportedAt: new Date().getTime(),
-          complaint,
-          userWhoFiledComplaint: {
-            _id: currentUser.uid,
+        .update({
+          flag: {
+            flagged: true,
+            reportedAt: new Date().getTime(),
+            complaint,
+            userWhoFiledComplaint: {
+              _id: currentUser.uid,
+            },
           },
         });
     }
@@ -64,22 +66,30 @@ export default function Report({ route, navigation }) {
         .doc(route.params.talkId)
         .collection("messages")
         .doc(ID)
-        .collection("flags")
-        .add({
-          reportedAt: new Date().getTime(),
-          complaint,
-          user: {
-            _id: currentUser.uid,
+        .update({
+          flag: {
+            flagged: true,
+            reportedAt: new Date().getTime(),
+            complaint,
+            userWhoFiledComplaint: {
+              _id: currentUser.uid,
+            },
           },
         });
     }
     if (wantToBlock) {
       await Firebase.firestore()
         .collection("users")
-        .doc(currentUser.uid)
-        .collection("blockedUsers")
-        .add({
-          blockedUsersID: userIdToReport,
+        .doc(userIdToReport)
+        .update({
+          flag: {
+            flagged: true,
+            reportedAt: new Date().getTime(),
+            complaint,
+            userWhoFiledComplaint: {
+              _id: currentUser.uid,
+            },
+          },
         });
     }
     alert(

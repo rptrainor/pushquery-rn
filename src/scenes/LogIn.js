@@ -17,7 +17,7 @@ export default function LogIn({ navigation }) {
   const logIn = async () => {
     try {
       await Firebase.auth().signInWithEmailAndPassword(email, password);
-      navigation.navigate("Root", { screen: "Create" });
+      navigation.navigate("Home", { screen: "Home" });
     } catch (error) {
       alert(error);
     }
