@@ -19,7 +19,7 @@ import SendMsgInput from "../components/organisms/SendMsgInput";
 import TalkMsg from "../components/organisms/TalkMsg";
 
 export default function Talk({ navigation, route }) {
-  const { currentUser } = React.useContext(AuthContext);
+  const { currentUser, blockedUserList } = React.useContext(AuthContext);
   const [messages, setMessages] = React.useState([]);
   const [inputText, setInputText] = React.useState("");
 
@@ -30,9 +30,6 @@ export default function Talk({ navigation, route }) {
   const talkDescription = route.params.talk.description;
   const talkCreatedAt = route.params.talk.createdOn;
   const howLongAgo = formatDistance(Date.now(), talkCreatedAt, []);
-
-  // console.log({talkId});
-  
 
   React.useEffect(() => {
     const messageListener = Firebase.firestore()
@@ -67,6 +64,18 @@ export default function Talk({ navigation, route }) {
     return () => messageListener();
   }, []);
 
+  // const filterForBlockedUserContent = () => {
+  //   const filteredMessageList = [];
+  //   blockedUserList.forEach((e1) =>
+  //     messages.forEach((e2) => {
+  //       if (e1 !== e2) {
+  //         filteredMessageList.push(e2);
+  //       }
+  //     })
+  //   );
+  //   return filter
+  // };
+
   const handleMsgSend = async () => {
     const text = inputText;
     if (inputText.length > 0) {
@@ -82,7 +91,7 @@ export default function Talk({ navigation, route }) {
               _id: currentUser.uid,
               email: currentUser.email,
               displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL
+              photoURL: currentUser.photoURL,
             },
           });
 

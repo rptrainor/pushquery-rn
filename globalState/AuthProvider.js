@@ -10,23 +10,25 @@ export function AuthProvider(props) {
 
   useEffect(() => {
     Firebase.auth().onAuthStateChanged(setCurrentUser);
-    const blockedUserListener = Firebase.firestore()
-      .collection("users")
-      .doc(currentUser.uid)
-      .collection("blockedUsers")
-      .onSnapshot((querySnapshot) => {
-        const blockedUsers = querySnapshot.docs.map((doc) => {
-          const firebaseData = doc.data();
+    if (currentUser) {
+      const blockedUserListener = Firebase.firestore()
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("blockedUsers")
+        .onSnapshot((querySnapshot) => {
+          const blockedUsers = querySnapshot.docs.map((doc) => {
+            const firebaseData = doc.data();
 
-          const data = {
-            // id: doc.id,
-            blockedUsersID: "",
-            ...firebaseData,
-          };
-          return data;
+            const data = {
+              // id: doc.id,
+              blockedUsersID: "",
+              ...firebaseData,
+            };
+            return data;
+          });
+          setBlockedUserList(blockedUsers);
         });
-        setBlockedUserList(blockedUsers);
-      });
+    }
   }, []);
 
   console.log({ blockedUserList });
