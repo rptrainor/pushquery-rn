@@ -28,8 +28,10 @@ export function AuthProvider(props) {
           });
           setBlockedUserList(blockedUsers);
         });
+    } else {
+      setBlockedUserList([]);
     }
-  }, []);
+  }, [currentUser]);
 
   console.log({ blockedUserList });
 
