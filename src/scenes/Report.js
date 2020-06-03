@@ -85,7 +85,7 @@ export default function Report({ route, navigation }) {
     alert(
       "Thank you for your report.  We have taken the actions you specified and will be following up with your filed report."
     );
-    navigation.goBack();
+    navigation.navigate("Home", { screen: "Home" });
   };
 
   return (
