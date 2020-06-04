@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
   FlatList,
   KeyboardAvoidingView,
@@ -19,7 +18,7 @@ import SendMsgInput from "../components/organisms/SendMsgInput";
 import TalkMsg from "../components/organisms/TalkMsg";
 
 export default function Talk({ navigation, route }) {
-  const { currentUser } = React.useContext(AuthContext);
+  const { currentUser, isBlocked } = React.useContext(AuthContext);
   const [messages, setMessages] = React.useState([]);
   const [inputText, setInputText] = React.useState("");
 
@@ -36,8 +35,8 @@ export default function Talk({ navigation, route }) {
       .collection("talks")
       .doc(talkId)
       .collection("messages")
-      .where("flag.flagged", "==", false)
-      // .orderBy("createdAt", "asc")
+      // .where("flag.flagged", "==", false)
+      .orderBy("createdAt", "asc")
       .onSnapshot((querySnapshot) => {
         const messages = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
@@ -113,7 +112,7 @@ export default function Talk({ navigation, route }) {
   return (
     <View style={talkStyles.container}>
       <View style={talkStyles.statusBarView} />
-      <View style={talkStyles.backBtn}>
+      <View style={talkStyles.backBtnBox}>
         <TouchableOpacity style={talkStyles.backBtn} onPress={returnToMainHome}>
           <Ionicons name="ios-arrow-back" size={24} color="black" />
         </TouchableOpacity>
@@ -154,14 +153,20 @@ const talkStyles = StyleSheet.create({
     width: "50%",
     backgroundColor: "#F2EEE4",
   },
-  backBtn: {
+  backBtnBox: {
     marginTop: 5,
     marginLeft: 8,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+    alignSelf: "flex-start",
     marginHorizontal: 5,
     paddingHorizontal: 3,
+  },
+  backBtn: {
+    width: 30,
+    height: 30,
+    marginLeft: 10,
   },
   title: {
     fontFamily: "Lato",
@@ -170,6 +175,7 @@ const talkStyles = StyleSheet.create({
     flexWrap: "wrap",
     marginHorizontal: 5,
     paddingHorizontal: 3,
+    marginBottom: 5,
     color: PRIMARY,
   },
   statusBarView: {

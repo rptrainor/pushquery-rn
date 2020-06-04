@@ -40,11 +40,11 @@ export default function App() {
     loadResourcesAndDataAsync();
   }, []);
 
-  if (!isLoadingComplete) {
-    console.log("not complete");
-    return null;
-  } else {
-    console.log("complete");
+  // if (!isLoadingComplete) {
+  //   console.log("not complete");
+  //   return null;
+  // } else {
+  //   console.log("complete");
     return (
       <ContextProvider>
         <NavigationContainer>

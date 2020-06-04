@@ -1,28 +1,40 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import formatDistance from "date-fns/formatDistance";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { PRIMARY, GRAY_DARK } from "../../styles/colors";
+import { AuthContext } from "../../../globalState";
 
 export default function TalkMsg({ item, navigation, talkId }) {
+  const { currentUser } = React.useContext(AuthContext);
   const msgCreatedAt = item.createdAt;
   const howLongAgo = formatDistance(Date.now(), msgCreatedAt, []);
 
   const handleReport = () => {
-    navigation.navigate("Report", {
-      id: item._id,
-      type: "comment",
-      displayName: item.user.displayName,
-      userIdToReport: item.user._id,
-      talkId
-    });
+    if (!currentUser) {
+      alert(
+        "We are sorry, you will have to log in before you can report or edit a Query"
+      );
+      navigation.navigate("Me", { screen: "Log In" });
+    } else {
+      navigation.navigate("Report", {
+        id: item._id,
+        type: "comment",
+        displayName: item.user.displayName,
+        userIdToReport: item.user._id,
+        talkId,
+      });
+    }
   };
-
   
   return (
     <View style={msgStyles.container}>
-      <FontAwesome5 name="user-astronaut" size={17} style={msgStyles.avatar} />
+      <Image
+        source={{
+          uri: item.user.photoURL,
+        }}
+        style={msgStyles.avatar}
+      />
       <View style={msgStyles.msgBox}>
         <View style={msgStyles.msgDetailBox}>
           <View style={msgStyles.msgDetailUsernameAndHowLongAgo}>
@@ -68,6 +80,9 @@ const msgStyles = StyleSheet.create({
   avatar: {
     marginHorizontal: 5,
     marginVertical: 10,
+    borderRadius: 50,
+    width: 20,
+    height: 20,
   },
   username: {
     color: PRIMARY,
@@ -75,7 +90,6 @@ const msgStyles = StyleSheet.create({
   },
   time: {
     color: GRAY_DARK,
-    // fontWeight: "200",
   },
   msgDetailBox: {
     display: "flex",

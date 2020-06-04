@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
+  StyleSheet,
 } from "react-native";
 import Firebase from "../../config/firebase";
 import { AuthContext } from "../../globalState";
@@ -77,26 +78,39 @@ export default function Create({ navigation }) {
       >
         <View style={styles.statusBarView} />
         <View style={styles.container}>
-          <View style={styles.padding}>
-            <Text style={styles.header_text}>
-              What is the title of your talk?
-            </Text>
+          <View style={createStyles.createContainer}>
+            <View style={styles.padding}>
+              <Text style={styles.header_text}>
+                What is the title of your talk?
+              </Text>
+            </View>
+            <TextInput
+              style={styles.form_text_input}
+              placeholder="title"
+              onChangeText={(title) => setTitle(title)}
+            />
+            <TextInput
+              style={styles.form_text_input}
+              placeholder="description"
+              onChangeText={(description) => setDescription(description)}
+              multiline
+              numberOfLines={20}
+            />
+            <TouchableOpacity
+              style={buttons.primary_button}
+              onPress={createTalk}
+            >
+              <Text style={buttons.primary_button_text}>CREATE</Text>
+            </TouchableOpacity>
           </View>
-          <TextInput
-            style={styles.form_text_input}
-            placeholder="title"
-            onChangeText={(title) => setTitle(title)}
-          />
-          <TextInput
-            style={styles.form_text_input}
-            placeholder="description"
-            onChangeText={(description) => setDescription(description)}
-          />
-          <TouchableOpacity style={buttons.primary_button} onPress={createTalk}>
-            <Text style={buttons.primary_button_text}>CREATE</Text>
-          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>
   );
 }
+
+const createStyles = StyleSheet.create({
+  createContainer: {
+    width: "80%",
+  },
+});

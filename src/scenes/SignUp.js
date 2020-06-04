@@ -1,5 +1,11 @@
 import React from "react";
-import { TextInput, TouchableOpacity, Text, View } from "react-native";
+import {
+  TextInput,
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+} from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
 import Firebase from "../../config/firebase";
@@ -12,10 +18,7 @@ export default function SignUp({ navigation }) {
 
   const SignUp = async () => {
     try {
-      const { uid } = await Firebase.auth().createUserWithEmailAndPassword(
-        email,
-        password
-      );
+      await Firebase.auth().createUserWithEmailAndPassword(email, password);
       await Firebase.auth().currentUser.updateProfile({
         displayName,
         photoURL:
@@ -49,34 +52,42 @@ export default function SignUp({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.padding}>
-        <Text style={styles.header_text}>Sign Up:</Text>
+      <View style={signUpStyles.signUpContainer}>
+        <View style={styles.padding}>
+          <Text style={styles.header_text}>Sign Up:</Text>
+        </View>
+        <TextInput
+          style={styles.form_text_input}
+          onChangeText={(email) => setEmail(email)}
+          placeholder="email"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.form_text_input}
+          onChangeText={(displayName) => setDisplayName(displayName)}
+          placeholder="display name"
+        />
+        <TextInput
+          style={styles.form_text_input}
+          style={styles.form_text_input}
+          onChangeText={(password) => setPassword(password)}
+          placeholder="password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+        />
+        <TouchableOpacity style={buttons.secondary_button} onPress={SignUp}>
+          <Text style={buttons.secondary_button_text}>SIGN UP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={buttons.primary_button} onPress={NavToLogin}>
+          <Text style={buttons.primary_button_text}>LOG IN</Text>
+        </TouchableOpacity>
       </View>
-      <TextInput
-        style={styles.form_text_input}
-        onChangeText={(email) => setEmail(email)}
-        placeholder="email"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.form_text_input}
-        onChangeText={(displayName) => setDisplayName(displayName)}
-        placeholder="display name"
-      />
-      <TextInput
-        style={styles.form_text_input}
-        style={styles.form_text_input}
-        onChangeText={(password) => setPassword(password)}
-        placeholder="password"
-        secureTextEntry={true}
-        autoCapitalize="none"
-      />
-      <TouchableOpacity style={buttons.secondary_button} onPress={SignUp}>
-        <Text style={buttons.secondary_button_text}>SIGN UP</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={buttons.primary_button} onPress={NavToLogin}>
-        <Text style={buttons.primary_button_text}>LOG IN</Text>
-      </TouchableOpacity>
     </View>
   );
 }
+
+const signUpStyles = StyleSheet.create({
+  signUpContainer: {
+    width: "80%",
+  },
+});

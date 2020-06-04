@@ -93,8 +93,24 @@ export default function Report({ route, navigation }) {
         });
     }
     alert(
-      "Thank you for your report.  We have taken the actions you specified and will be following up with your filed report."
+      `Thank you for your report.  We have deleted the ${type} and will be following up with your filed report.`
     );
+    navigation.navigate("Home", { screen: "Home" });
+  };
+
+  const handleDelete = async () => {
+    if (type == "talk") {
+      await Firebase.firestore().collection("talks").doc(ID).delete();
+    }
+    if (type == "comment") {
+      await Firebase.firestore()
+        .collection("talks")
+        .doc(route.params.talkId)
+        .collection("messages")
+        .doc(ID)
+        .delete();
+    }
+    alert(`We have deleted your ${type}`);
     navigation.navigate("Home", { screen: "Home" });
   };
 
@@ -111,47 +127,63 @@ export default function Report({ route, navigation }) {
       </TouchableOpacity>
       <View style={reportStyles.container}>
         <View style={reportStyles.reportContainer}>
-          <Text style={styles.header_text}>
-            Would you like to report this {type}?
-          </Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={wantToReport ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleReportSwtich}
-            value={wantToReport}
-          />
-          {wantToReport ? (
+          {currentUser.uid !== userIdToReport ? (
             <React.Fragment>
               <Text style={styles.header_text}>
-                Please, tell us what is wrong with this {type}
+                Would you like to report this {type}
               </Text>
-              <TextInput
-                style={styles.form_text_input}
-                placeholder="reason for reporting"
-                onChangeText={(complaint) => setComplaint(complaint)}
-                value={complaint}
+              <Switch
+                trackColor={{ false: "#767577", true: "#5A90E6" }}
+                thumbColor={wantToReport ? "#FFCC33" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleReportSwtich}
+                value={wantToReport}
               />
+              {wantToReport ? (
+                <React.Fragment>
+                  <Text style={styles.header_text}>
+                    Please, tell us what is wrong with this {type}?
+                  </Text>
+                  <TextInput
+                    style={styles.form_text_input}
+                    placeholder="reason for reporting"
+                    onChangeText={(complaint) => setComplaint(complaint)}
+                    value={complaint}
+                  />
+                </React.Fragment>
+              ) : (
+                <React.Fragment />
+              )}
+              <Text style={styles.header_text}>
+                Would you like to block {displayName}?
+              </Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "#5A90E6" }}
+                thumbColor={wantToBlock ? "#FFCC33" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleBlockSwtich}
+                value={wantToBlock}
+              />
+              <TouchableOpacity
+                style={buttons.primary_button}
+                onPress={handleSubmit}
+              >
+                <Text style={buttons.primary_button_text}>SEND</Text>
+              </TouchableOpacity>
             </React.Fragment>
           ) : (
-            <React.Fragment />
+            <React.Fragment>
+              <Text style={styles.header_text}>
+                Would you like to delete this {type}?
+              </Text>
+              <TouchableOpacity
+                style={buttons.primary_button}
+                onPress={handleDelete}
+              >
+                <Text style={buttons.primary_button_text}>YES</Text>
+              </TouchableOpacity>
+            </React.Fragment>
           )}
-          <Text style={styles.header_text}>
-            Would you like to block {displayName}?
-          </Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={wantToBlock ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleBlockSwtich}
-            value={wantToBlock}
-          />
-          <TouchableOpacity
-            style={buttons.primary_button}
-            onPress={handleSubmit}
-          >
-            <Text style={buttons.primary_button_text}>SEND</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </View>

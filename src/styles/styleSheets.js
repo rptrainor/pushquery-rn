@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     fontFamily: "Lato",
     color: PRIMARY,
     fontWeight: "bold",
-    margin: 5
+    margin: 5,
   },
   paragraph_text: {
     fontSize: PARAGRAPH_LINK_TEXT,

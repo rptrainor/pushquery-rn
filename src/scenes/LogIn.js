@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Text,
   View,
-  KeyboardAvoidingView,
+  StyleSheet,
 } from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
@@ -33,29 +33,37 @@ export default function LogIn({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.padding}>
-        <Text style={styles.header_text}>Log In:</Text>
+      <View style={logInStyles.logInContainer}>
+        <View style={styles.padding}>
+          <Text style={styles.header_text}>Log In:</Text>
+        </View>
+        <TextInput
+          style={styles.form_text_input}
+          onChangeText={(email) => setEmail(email)}
+          placeholder="email"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.form_text_input}
+          style={styles.form_text_input}
+          onChangeText={(password) => setPassword(password)}
+          placeholder="password"
+          autoCapitalize="none"
+          secureTextEntry={true}
+        />
+        <TouchableOpacity style={buttons.secondary_button} onPress={logIn}>
+          <Text style={buttons.secondary_button_text}>LOG IN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={buttons.primary_button} onPress={NavToSignUp}>
+          <Text style={buttons.primary_button_text}>SIGN UP</Text>
+        </TouchableOpacity>
       </View>
-      <TextInput
-        style={styles.form_text_input}
-        onChangeText={(email) => setEmail(email)}
-        placeholder="email"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.form_text_input}
-        style={styles.form_text_input}
-        onChangeText={(password) => setPassword(password)}
-        placeholder="password"
-        autoCapitalize="none"
-        secureTextEntry={true}
-      />
-      <TouchableOpacity style={buttons.secondary_button} onPress={logIn}>
-        <Text style={buttons.secondary_button_text}>LOG IN</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={buttons.primary_button} onPress={NavToSignUp}>
-        <Text style={buttons.primary_button_text}>SIGN UP</Text>
-      </TouchableOpacity>
     </View>
   );
 }
+
+const logInStyles = StyleSheet.create({
+  logInContainer: {
+    width: "80%",
+  },
+});

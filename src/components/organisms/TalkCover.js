@@ -2,21 +2,30 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { styles } from "../../styles/styleSheets";
+import { AuthContext } from "../../../globalState";
 
 export default function TalkCover({ talk, navigation }) {
+  const { currentUser } = React.useContext(AuthContext);
+
   const navToTalk = () => {
     navigation.navigate("Talk", { talk });
   };
 
   const handleReport = () => {
-    navigation.navigate("Report", {
-      id: talk._id,
-      type: "talk",
-      displayName: talk.user.displayName,
-      userIdToReport: talk.user._id
-    });
+    if (!currentUser) {
+      alert(
+        "We are sorry, you will have to log in before you can report or edit a Talk"
+      );
+      navigation.navigate("Me", { screen: "Log In" });
+    } else {
+      navigation.navigate("Report", {
+        id: talk._id,
+        type: "talk",
+        displayName: talk.user.displayName,
+        userIdToReport: talk.user._id,
+      });
+    }
   };
-  
 
   return (
     <View style={talkCover.container}>
@@ -32,10 +41,13 @@ export default function TalkCover({ talk, navigation }) {
         <View style={styles.padding}>
           <Text style={styles.header_text}>{talk.title}</Text>
         </View>
-        <Text style={styles.paragraph_text}
-        numberOfLines={10}
-        ellipsizeMode="tail"
-        >{talk.description}</Text>
+        <Text
+          style={styles.paragraph_text}
+          numberOfLines={10}
+          ellipsizeMode="tail"
+        >
+          {talk.description}
+        </Text>
       </TouchableOpacity>
     </View>
   );
