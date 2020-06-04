@@ -12,7 +12,7 @@ import tabNavigator from "./src/navigations/tabNavigator";
 import SignUp from "./src/scenes/SignUp";
 import LogIn from "./src/scenes/LogIn";
 import Talk from "./src/scenes/Talk";
-import Report from './src/scenes/Report'
+import Report from "./src/scenes/Report";
 
 // creating the navigator to swtich between screens
 const RootStack = createStackNavigator();
@@ -40,43 +40,43 @@ export default function App() {
     loadResourcesAndDataAsync();
   }, []);
 
-  // if (!isLoadingComplete) {
-  //   console.log("not complete");
-  //   return null;
-  // } else {
-  //   console.log("complete");
-    return (
-      <ContextProvider>
-        <NavigationContainer>
-          <RootStack.Navigator initialRouteName="Root">
-            <RootStack.Screen
-              name="Root"
-              component={tabNavigator}
-              options={{ headerShown: false }}
-            />
-            <RootStack.Screen
-              name="Sign Up"
-              component={SignUp}
-              options={{ headerShown: false }}
-            />
-            <RootStack.Screen
-              name="Log In"
-              component={LogIn}
-              options={{ headerShown: false }}
-            />
-            <RootStack.Screen
-              name="Talk"
-              component={Talk}
-              options={{ headerShown: false }}
-            />
-            <RootStack.Screen
-              name="Report"
-              component={Report}
-              options={{ headerShown: false }}
-            />
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </ContextProvider>
-    );
+  if (!isLoadingComplete) {
+    console.log("not complete");
+    return null;
+  } else {
+    console.log("complete");
   }
+  return (
+    <ContextProvider>
+      <NavigationContainer>
+        <RootStack.Navigator initialRouteName="Root">
+          <RootStack.Screen
+            name="Root"
+            component={tabNavigator}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Sign Up"
+            component={SignUp}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Log In"
+            component={LogIn}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Talk"
+            component={Talk}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Report"
+            component={Report}
+            options={{ headerShown: false }}
+          />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </ContextProvider>
+  );
 }
