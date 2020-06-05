@@ -11,6 +11,7 @@ import {
   PARAGRAPH_LINK_TEXT,
   BUTTON_TEXT_INPUTS,
   HEADER_TEXT,
+  SECONDARY_TEXT,
 } from "./typography";
 
 export const styles = StyleSheet.create({
@@ -31,6 +32,14 @@ export const styles = StyleSheet.create({
     color: PRIMARY,
     fontWeight: "bold",
     margin: 5,
+  },
+  header2_text: {
+    fontSize: SECONDARY_TEXT,
+    fontFamily: "Lato",
+    color: PRIMARY,
+    fontWeight: "bold",
+    margin: 5,
+    marginBottom: 0,
   },
   paragraph_text: {
     fontSize: PARAGRAPH_LINK_TEXT,

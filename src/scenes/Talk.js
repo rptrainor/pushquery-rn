@@ -35,8 +35,8 @@ export default function Talk({ navigation, route }) {
       .collection("talks")
       .doc(talkId)
       .collection("messages")
-      // .where("flag.flagged", "==", false)
-      .orderBy("createdAt", "asc")
+      .where("flag.flagged", "==", false)
+      // .orderBy("createdAt", "asc")
       .onSnapshot((querySnapshot) => {
         const messages = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();

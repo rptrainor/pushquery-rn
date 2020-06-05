@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
+import { HIGHLIGHT_DARK } from "../styles/colors";
 import Firebase from "../../config/firebase";
 import { PRIMARY } from "../styles/colors";
 
@@ -81,6 +82,18 @@ export default function SignUp({ navigation }) {
         <TouchableOpacity style={buttons.primary_button} onPress={NavToLogin}>
           <Text style={buttons.primary_button_text}>LOG IN</Text>
         </TouchableOpacity>
+        <View style={signUpStyles.tosBox}>
+          <Text style={signUpStyles.tosText}>
+            By continuing you agree to Pushquery's{" "}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("TOS");
+            }}
+          >
+            <Text style={signUpStyles.tosLinkText}>Terms of Service</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -89,5 +102,17 @@ export default function SignUp({ navigation }) {
 const signUpStyles = StyleSheet.create({
   signUpContainer: {
     width: "80%",
+  },
+  tosText: {
+    fontSize: 11,
+  },
+  tosLinkText: {
+    fontSize: 11,
+    color: HIGHLIGHT_DARK,
+  },
+  tosBox: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap",
   },
 });

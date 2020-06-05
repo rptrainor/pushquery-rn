@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   StyleSheet,
+  Button,
 } from "react-native";
 import Firebase from "../../config/firebase";
 import { AuthContext } from "../../globalState";

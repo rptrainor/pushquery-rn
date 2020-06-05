@@ -13,6 +13,7 @@ import SignUp from "./src/scenes/SignUp";
 import LogIn from "./src/scenes/LogIn";
 import Talk from "./src/scenes/Talk";
 import Report from "./src/scenes/Report";
+import TOS from "./src/scenes/TOS";
 
 // creating the navigator to swtich between screens
 const RootStack = createStackNavigator();
@@ -73,6 +74,11 @@ export default function App() {
           <RootStack.Screen
             name="Report"
             component={Report}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="TOS"
+            component={TOS}
             options={{ headerShown: false }}
           />
         </RootStack.Navigator>
