@@ -6,7 +6,7 @@ import {
   Switch,
   TextInput,
   TouchableOpacity,
-  Button,
+  SafeAreaView
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles, buttons } from "../styles/styleSheets";
@@ -115,7 +115,7 @@ export default function Report({ route, navigation }) {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <View style={styles.statusBarView} />
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons
@@ -186,7 +186,7 @@ export default function Report({ route, navigation }) {
           )}
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

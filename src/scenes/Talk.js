@@ -6,10 +6,10 @@ import {
   FlatList,
   KeyboardAvoidingView,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import formatDistance from "date-fns/formatDistance";
 
 import { AuthContext } from "../../globalState";
 import { BACKGROUND, PRIMARY } from "../styles/colors";
@@ -22,13 +22,7 @@ export default function Talk({ navigation, route }) {
   const [messages, setMessages] = React.useState([]);
   const [inputText, setInputText] = React.useState("");
 
-  const keyboardVerticalOffset = Platform.OS === "ios" ? 20 : 0;
-
   const talkId = route.params.talk._id;
-
-  const talkDescription = route.params.talk.description;
-  const talkCreatedAt = route.params.talk.createdOn;
-  const howLongAgo = formatDistance(Date.now(), talkCreatedAt, []);
 
   React.useEffect(() => {
     const messageListener = Firebase.firestore()
@@ -36,7 +30,7 @@ export default function Talk({ navigation, route }) {
       .doc(talkId)
       .collection("messages")
       .where("flag.flagged", "==", false)
-      // .orderBy("createdAt", "asc")
+      .orderBy("createdAt", "asc")
       .onSnapshot((querySnapshot) => {
         const messages = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
@@ -109,8 +103,9 @@ export default function Talk({ navigation, route }) {
       screen: "Home",
     });
   };
+  
   return (
-    <View style={talkStyles.container}>
+    <SafeAreaView style={talkStyles.container}>
       <View style={talkStyles.statusBarView} />
       <View style={talkStyles.backBtnBox}>
         <TouchableOpacity style={talkStyles.backBtn} onPress={returnToMainHome}>
@@ -125,11 +120,7 @@ export default function Talk({ navigation, route }) {
           <TalkMsg navigation={navigation} item={item} talkId={talkId} />
         )}
       />
-      <KeyboardAvoidingView
-        behavior="padding"
-        enabled
-        // keyboardVerticalOffset={keyboardVerticalOffset}
-      >
+      <KeyboardAvoidingView behavior="padding" enabled>
         <SendMsgInput
           currentUser={currentUser}
           handleMsgSend={handleMsgSend}
@@ -137,7 +128,7 @@ export default function Talk({ navigation, route }) {
           inputText={inputText}
         />
       </KeyboardAvoidingView>
-    </View>
+    </SafeAreaView>
   );
 }
 

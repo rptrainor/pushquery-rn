@@ -39,12 +39,15 @@ export default function TalkCover({ talk, navigation }) {
       </TouchableOpacity>
       <TouchableOpacity onPress={navToTalk}>
         <View style={styles.padding}>
-          <Text style={styles.header_text}>{talk.title}</Text>
+          <Text style={styles.header_text} selectable>
+            {talk.title}
+          </Text>
         </View>
         <Text
           style={styles.paragraph_text}
           numberOfLines={10}
           ellipsizeMode="tail"
+          selectable
         >
           {talk.description}
         </Text>

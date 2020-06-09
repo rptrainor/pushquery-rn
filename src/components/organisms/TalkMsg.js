@@ -26,7 +26,7 @@ export default function TalkMsg({ item, navigation, talkId }) {
       });
     }
   };
-  
+
   return (
     <View style={msgStyles.container}>
       <Image
@@ -50,7 +50,12 @@ export default function TalkMsg({ item, navigation, talkId }) {
           </TouchableOpacity>
         </View>
 
-        <Text>{item.text}</Text>
+        <Text
+          selectable
+          style={msgStyles.talkMsgText}
+        >
+          {item.text}
+        </Text>
       </View>
     </View>
   );
@@ -64,7 +69,7 @@ const msgStyles = StyleSheet.create({
   msgBox: {
     backgroundColor: "#fff",
     borderRadius: 10,
-    width: "90%",
+    width: "85%",
     marginVertical: 5,
     padding: 5,
     shadowColor: "#000",
@@ -81,8 +86,8 @@ const msgStyles = StyleSheet.create({
     marginHorizontal: 5,
     marginVertical: 10,
     borderRadius: 50,
-    width: 20,
-    height: 20,
+    width: 40,
+    height: 40,
   },
   username: {
     color: PRIMARY,
@@ -100,5 +105,10 @@ const msgStyles = StyleSheet.create({
   msgDetailUsernameAndHowLongAgo: {
     display: "flex",
     flexDirection: "row",
+  },
+  talkMsgText: {
+    lineHeight: 20,
+    marginHorizontal: 5,
+    padding: 5,
   },
 });

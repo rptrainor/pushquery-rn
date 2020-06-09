@@ -1,7 +1,7 @@
 import React from "react";
 import {
   View,
-  Text,
+  SafeAreaView,
   FlatList,
   ActivityIndicator,
   StatusBar,
@@ -19,6 +19,7 @@ export default function Home({ navigation, route }) {
     const unsubscribe = Firebase.firestore()
       .collection("talks")
       .where("flag.flagged", "==", false)
+      .orderBy("createdOn", "asc")
       .onSnapshot((querySnapshot) => {
         const talks = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
@@ -62,7 +63,7 @@ export default function Home({ navigation, route }) {
   return (
     <View>
       <View style={styles.statusBarView} />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <StatusBar hidden={true} />
         <FlatList
           data={talks}
@@ -71,7 +72,7 @@ export default function Home({ navigation, route }) {
             <TalkCover talk={item} navigation={navigation} />
           )}
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 }
