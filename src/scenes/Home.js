@@ -61,18 +61,15 @@ export default function Home({ navigation, route }) {
       </View>
     );
   return (
-    <View>
-      <View style={styles.statusBarView} />
-      <SafeAreaView style={styles.container}>
-        <StatusBar hidden={true} />
-        <FlatList
-          data={talks}
-          keyExtractor={(talk) => talk._id}
-          renderItem={({ item }) => (
-            <TalkCover talk={item} navigation={navigation} />
-          )}
-        />
-      </SafeAreaView>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar hidden={true} />
+      <FlatList
+        data={talks}
+        keyExtractor={(talk) => talk._id}
+        renderItem={({ item }) => (
+          <TalkCover talk={item} navigation={navigation} />
+        )}
+      />
+    </SafeAreaView>
   );
 }

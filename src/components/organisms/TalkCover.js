@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { styles } from "../../styles/styleSheets";
-import { AuthContext } from "../../../globalState";
+import { AuthContext, TalkContext } from "../../../globalState";
 
 export default function TalkCover({ talk, navigation }) {
   const { currentUser } = React.useContext(AuthContext);

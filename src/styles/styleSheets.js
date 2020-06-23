@@ -17,11 +17,12 @@ import {
 export const styles = StyleSheet.create({
   container: {
     display: "flex",
+    // flex: 1,
     // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
-    height: "100%",
+    // height: "100%",
   },
   padding: {
     marginVertical: 10,

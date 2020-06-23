@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Font from "expo-font";
 import { SplashScreen } from "expo";
+import { BACKGROUND, PARAGRAPH_COLOR } from "./src/styles/colors";
 
 // ContectProvider
 import { ContextProvider } from "./globalState/providerCompose";
@@ -47,12 +48,19 @@ export default function App() {
   } else {
     console.log("complete");
   }
+  console.disableYellowBox = true;
   return (
     <ContextProvider>
       <NavigationContainer>
-        <RootStack.Navigator initialRouteName="Root">
+        <RootStack.Navigator
+          initialRouteName="Root"
+          screenOptions={{
+            headerTintColor: PARAGRAPH_COLOR,
+            headerStyle: { backgroundColor: BACKGROUND },
+          }}
+        >
           <RootStack.Screen
-            name="Root"
+            name="Home"
             component={tabNavigator}
             options={{ headerShown: false }}
           />
@@ -67,19 +75,14 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <RootStack.Screen
-            name="Talk"
-            component={Talk}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
             name="Report"
             component={Report}
-            options={{ headerShown: false }}
+            options={{ headerShown: true }}
           />
           <RootStack.Screen
             name="TOS"
             component={TOS}
-            options={{ headerShown: false }}
+            options={{ headerShown: true }}
           />
         </RootStack.Navigator>
       </NavigationContainer>

@@ -14,14 +14,6 @@ import { SECONDARY_TEXT } from "../styles/typography";
 export default function TOS({ navigation }) {
   return (
     <View>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons
-          name="ios-arrow-back"
-          size={24}
-          color="black"
-          style={tosStyles.backBtn}
-        />
-      </TouchableOpacity>
       <View style={tosStyles.scrollContainer}>
         <ScrollView
           style={tosStyles.container}
@@ -261,7 +253,7 @@ const tosStyles = StyleSheet.create({
   container: {
     display: "flex",
     backgroundColor: BACKGROUND,
-    height: "100%",
+    // height: "100%",
   },
   reportContainer: {
     marginTop: 100,
@@ -288,6 +280,5 @@ const tosStyles = StyleSheet.create({
   },
   scrollContainer: {
     backgroundColor: BACKGROUND,
-    marginBottom: 100,
   },
 });

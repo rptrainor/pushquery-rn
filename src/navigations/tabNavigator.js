@@ -2,7 +2,11 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { BACKGROUND, INACTIVE_ICON_GRAY } from "../styles/colors";
+import {
+  BACKGROUND,
+  INACTIVE_ICON_GRAY,
+  PARAGRAPH_COLOR,
+} from "../styles/colors";
 
 // importing components
 import createNavigation from "./createNavigation";
@@ -11,10 +15,12 @@ import homeNavigator from "./homeNavigator";
 // pulling out the bottom tab navigator from react-navigation
 const Tab = createBottomTabNavigator();
 
-export default function tabNavigator() {
+export default function tabNavigator({ route }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerTintColor: PARAGRAPH_COLOR,
+        headerStyle: { backgroundColor: BACKGROUND },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -41,7 +47,7 @@ export default function tabNavigator() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={homeNavigator} />
+      <Tab.Screen name="Home" component={homeNavigator} route={route} />
       <Tab.Screen name="Create" component={createNavigation} />
       <Tab.Screen name="Me" component={authNavigator} />
     </Tab.Navigator>

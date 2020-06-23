@@ -8,9 +8,8 @@ import {
 } from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
-import { HIGHLIGHT_DARK } from "../styles/colors";
 import Firebase from "../../config/firebase";
-import { PRIMARY } from "../styles/colors";
+import { HIGHLIGHT_DARK, BACKGROUND } from "../styles/colors";
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -52,7 +51,7 @@ export default function SignUp({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={signUpStyles.container}>
       <View style={signUpStyles.signUpContainer}>
         <View style={styles.padding}>
           <Text style={styles.header_text}>Sign Up:</Text>
@@ -114,5 +113,14 @@ const signUpStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",
+  },
+  container: {
+    display: "flex",
+    flex: 1,
+    // marginTop: Constants.statusBarHeight,
+    backgroundColor: BACKGROUND,
+    alignItems: "center",
+    justifyContent: "center",
+    // height: "100%",
   },
 });

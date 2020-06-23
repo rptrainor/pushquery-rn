@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   SafeAreaView,
+  SectionList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
@@ -103,25 +104,35 @@ export default function Talk({ navigation, route }) {
       screen: "Home",
     });
   };
-  
+  console.log(messages);
+
+  if (!messages) return <Text>loading...</Text>;
   return (
     <SafeAreaView style={talkStyles.container}>
       <View style={talkStyles.statusBarView} />
       <View style={talkStyles.backBtnBox}>
-        <TouchableOpacity style={talkStyles.backBtn} onPress={returnToMainHome}>
-          <Ionicons name="ios-arrow-back" size={24} color="black" />
-        </TouchableOpacity>
         <Text style={talkStyles.title}>{route.params.talk.title}</Text>
       </View>
       <FlatList
         data={messages}
         keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <TalkMsg navigation={navigation} item={item} talkId={talkId} />
+        // style={[
+        //   talkStyles.item,
+        //   { backgroundColor: '#6e3b6e' },
+        // ]}
+        renderItem={({ item, index }) => (
+          <TalkMsg
+            navigation={navigation}
+            Index={index}
+            item={item}
+            talkId={talkId}
+          />
         )}
+        ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
+        contentContainerStyle={{ paddingBottom: 50 }}
       />
       <KeyboardAvoidingView behavior="padding" enabled>
-        <SendMsgInput
+      <SendMsgInput
           currentUser={currentUser}
           handleMsgSend={handleMsgSend}
           setInputText={setInputText}
@@ -134,15 +145,14 @@ export default function Talk({ navigation, route }) {
 
 const talkStyles = StyleSheet.create({
   container: {
-    // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
+    flex: 2
   },
-  flatList: {
-    width: "50%",
-    backgroundColor: "#F2EEE4",
+  item: {
+    flexGrow: 1,
+    paddingBottom: 180,
   },
   backBtnBox: {
     marginTop: 5,

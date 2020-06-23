@@ -6,9 +6,8 @@ import {
   Switch,
   TextInput,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { styles, buttons } from "../styles/styleSheets";
 import { BACKGROUND, PRIMARY } from "../styles/colors";
 import { SECONDARY_TEXT } from "../styles/typography";
@@ -115,16 +114,7 @@ export default function Report({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView>
-      <View style={styles.statusBarView} />
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons
-          name="ios-arrow-back"
-          size={24}
-          color="black"
-          style={reportStyles.backBtn}
-        />
-      </TouchableOpacity>
+    <SafeAreaView style={reportStyles.background}>
       <View style={reportStyles.container}>
         <View style={reportStyles.reportContainer}>
           {currentUser.uid !== userIdToReport ? (
@@ -201,7 +191,7 @@ const reportStyles = StyleSheet.create({
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "flex-start",
-    height: "100%",
+    // height: "100%",
   },
   reportContainer: {
     marginTop: 100,
@@ -220,5 +210,8 @@ const reportStyles = StyleSheet.create({
     fontSize: SECONDARY_TEXT,
     fontFamily: "Lato",
     color: PRIMARY,
+  },
+  background: {
+    backgroundColor: BACKGROUND,
   },
 });

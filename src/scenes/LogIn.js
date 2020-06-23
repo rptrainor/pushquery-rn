@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
-import { HIGHLIGHT_DARK } from "../styles/colors";
+import { HIGHLIGHT_DARK, BACKGROUND } from "../styles/colors";
 import Firebase from "../../config/firebase";
 
 export default function LogIn({ navigation }) {
@@ -34,7 +34,7 @@ export default function LogIn({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={logInStyles.container}>
       <View style={logInStyles.logInContainer}>
         <View style={styles.padding}>
           <Text style={styles.header_text}>Log In:</Text>
@@ -91,5 +91,14 @@ const logInStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",
+  },
+  container: {
+    display: "flex",
+    flex: 1,
+    // marginTop: Constants.statusBarHeight,
+    backgroundColor: BACKGROUND,
+    alignItems: "center",
+    justifyContent: "center",
+    // height: "100%",
   },
 });

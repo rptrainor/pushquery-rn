@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   StyleSheet,
-  Button,
+  SafeAreaView,
 } from "react-native";
 import Firebase from "../../config/firebase";
 import { AuthContext } from "../../globalState";
 
 import { styles, buttons } from "../styles/styleSheets";
+import { BACKGROUND } from '../styles/colors'
 import { FlatList } from "react-native-gesture-handler";
 
 export default function Create({ navigation }) {
@@ -54,13 +55,14 @@ export default function Create({ navigation }) {
                   _id: currentUser.uid,
                   email: currentUser.email,
                   displayName: currentUser.displayName,
+                  photoURL: currentUser.photoURL,
                 },
               });
           })
           .then(() => {
             setTitle("");
             setDescription("");
-            navigation.navigate("Root", { screen: "Home" });
+            navigation.navigate("Home", { screen: "Home" });
           });
       }
     } else {
@@ -71,15 +73,15 @@ export default function Create({ navigation }) {
   };
 
   return (
-    <View>
+    <View  style={createStyles.container}>
       <KeyboardAvoidingView
         behavior="padding"
         enabled
         // keyboardVerticalOffset={keyboardVerticalOffset}
       >
         <View style={styles.statusBarView} />
-        <View style={styles.container}>
-          <View style={createStyles.createContainer}>
+        <View>
+          <View>
             <View style={styles.padding}>
               <Text style={styles.header_text}>
                 What is the title of your talk?
@@ -113,5 +115,14 @@ export default function Create({ navigation }) {
 const createStyles = StyleSheet.create({
   createContainer: {
     width: "80%",
+  },
+  container: {
+    display: "flex",
+    flex: 1,
+    // marginTop: Constants.statusBarHeight,
+    backgroundColor: BACKGROUND,
+    alignItems: "center",
+    justifyContent: "center",
+    // height: "100%",
   },
 });
