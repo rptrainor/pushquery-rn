@@ -191,7 +191,7 @@ const reportStyles = StyleSheet.create({
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "flex-start",
-    // height: "100%",
+    height: "100%",
   },
   reportContainer: {
     marginTop: 100,

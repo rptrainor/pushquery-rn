@@ -57,6 +57,7 @@ export const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderRadius: 10,
     fontFamily: "Lato",
+    textAlignVertical: "top",
   },
   statusBarView: {
     height: Constants.statusBarHeight,

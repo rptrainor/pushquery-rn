@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   StyleSheet,
-  SafeAreaView,
+  Keyboard,
 } from "react-native";
 import Firebase from "../../config/firebase";
 import { AuthContext } from "../../globalState";
 
 import { styles, buttons } from "../styles/styleSheets";
-import { BACKGROUND } from '../styles/colors'
-import { FlatList } from "react-native-gesture-handler";
+import { BACKGROUND } from "../styles/colors";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Create({ navigation }) {
   const [title, setTitle] = React.useState("");
@@ -73,56 +73,58 @@ export default function Create({ navigation }) {
   };
 
   return (
-    <View  style={createStyles.container}>
-      <KeyboardAvoidingView
-        behavior="padding"
-        enabled
-        // keyboardVerticalOffset={keyboardVerticalOffset}
+    <KeyboardAvoidingView behavior="padding" style={createStyles.container}>
+      <TouchableOpacity
+        onPress={() => {navigation.goBack()}}
+        style={{ width: "100%", height: "10%", marginTop: 10}}
       >
-        <View style={styles.statusBarView} />
-        <View>
-          <View>
-            <View style={styles.padding}>
-              <Text style={styles.header_text}>
-                What is the title of your talk?
-              </Text>
-            </View>
-            <TextInput
-              style={styles.form_text_input}
-              placeholder="title"
-              onChangeText={(title) => setTitle(title)}
-            />
-            <TextInput
-              style={styles.form_text_input}
-              placeholder="description"
-              onChangeText={(description) => setDescription(description)}
-              multiline
-              numberOfLines={20}
-            />
-            <TouchableOpacity
-              style={buttons.primary_button}
-              onPress={createTalk}
-            >
-              <Text style={buttons.primary_button_text}>CREATE</Text>
-            </TouchableOpacity>
-          </View>
+        <Ionicons
+          name="ios-arrow-back"
+          size={30}
+          color="black"
+          style={createStyles.backBtn}
+        />
+      </TouchableOpacity>
+      <View style={{ width: "90%" }}>
+        <View style={styles.padding}>
+          <Text style={styles.header_text}>
+            What is the title of your talk?
+          </Text>
         </View>
-      </KeyboardAvoidingView>
-    </View>
+        <TextInput
+          style={styles.form_text_input}
+          placeholder="title"
+          onChangeText={(title) => setTitle(title)}
+        />
+        <TextInput
+          style={styles.form_text_input}
+          placeholder="description"
+          onChangeText={(description) => setDescription(description)}
+          multiline
+          numberOfLines={8}
+        />
+        <TouchableOpacity style={buttons.primary_button} onPress={createTalk}>
+          <Text style={buttons.primary_button_text}>CREATE</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const createStyles = StyleSheet.create({
-  createContainer: {
-    width: "80%",
-  },
   container: {
     display: "flex",
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
     // height: "100%",
+  },
+  backBtn: {
+    padding: 10,
+    textAlign: "left",
+    width: "100%",
+    backgroundColor: BACKGROUND,
   },
 });

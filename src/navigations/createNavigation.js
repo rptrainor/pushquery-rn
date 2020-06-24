@@ -8,7 +8,7 @@ import SignUp from "../scenes/SignUp";
 
 const AuthStack = createStackNavigator();
 
-export default function createNavigator() {
+export default function createNavigator({navigation}) {
   const { currentUser } = React.useContext(AuthContext);
 
   return (
@@ -17,6 +17,7 @@ export default function createNavigator() {
         <AuthStack.Screen
           name="Create"
           component={Create}
+          navigation={navigation}
           options={{ headerShown: false }}
         />
       ) : (
