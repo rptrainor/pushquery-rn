@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
-import { styles, buttons } from "../styles/styleSheets";
+import { styles } from "../styles/styleSheets";
 import { BACKGROUND, PRIMARY } from "../styles/colors";
 import { SECONDARY_TEXT } from "../styles/typography";
-export default function TOS({ navigation }) {
+export default function TOS() {
   return (
     <View>
       <View style={tosStyles.scrollContainer}>
@@ -253,7 +246,6 @@ const tosStyles = StyleSheet.create({
   container: {
     display: "flex",
     backgroundColor: BACKGROUND,
-    // height: "100%",
   },
   reportContainer: {
     marginTop: 100,

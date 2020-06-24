@@ -12,6 +12,7 @@ import {
 import createNavigation from "./createNavigation";
 import authNavigator from "./authNavigator";
 import homeNavigator from "./homeNavigator";
+import Values from '../components/organisms/Values'
 // pulling out the bottom tab navigator from react-navigation
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +35,9 @@ export default function tabNavigator({ route }) {
             case "Create":
               iconName = focused ? "plus-square" : "plus-square-o";
               break;
+              case "Our Values":
+                iconName = focused ? "heart" : "heart-o";
+                break;
           }
 
           return <FontAwesome name={iconName} size={size} color={color} />;
@@ -49,6 +53,7 @@ export default function tabNavigator({ route }) {
     >
       <Tab.Screen name="Home" component={homeNavigator} route={route} />
       <Tab.Screen name="Create" component={createNavigation} />
+      <Tab.Screen name="Our Values" component={Values} />
       <Tab.Screen name="Me" component={authNavigator} />
     </Tab.Navigator>
   );

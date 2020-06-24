@@ -117,10 +117,8 @@ const signUpStyles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
-    // height: "100%",
   },
 });

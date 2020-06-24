@@ -5,7 +5,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
 } from "react-native";
 
 import { styles, buttons } from "../styles/styleSheets";
@@ -95,10 +94,8 @@ const logInStyles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     alignItems: "center",
     justifyContent: "center",
-    // height: "100%",
   },
 });
