@@ -49,6 +49,7 @@ export default function App() {
     console.log("complete");
   }
   console.disableYellowBox = true;
+  console.ignoredYellowBox = ['Setting a timer'];
   return (
     <ContextProvider>
       <NavigationContainer>

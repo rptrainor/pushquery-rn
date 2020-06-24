@@ -6,22 +6,24 @@ import {
   FlatList,
   KeyboardAvoidingView,
   StyleSheet,
-  SafeAreaView,
-  SectionList,
+  TextInput,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Constants from "expo-constants";
 
 import { AuthContext } from "../../globalState";
-import { BACKGROUND, PRIMARY } from "../styles/colors";
+import {
+  BACKGROUND,
+  PRIMARY,
+  WHITE,
+  BUTTON_TEXT_INPUTS,
+} from "../styles/colors";
 import Firebase from "../../config/firebase";
-import SendMsgInput from "../components/organisms/SendMsgInput";
 import TalkMsg from "../components/organisms/TalkMsg";
 
 export default function Talk({ navigation, route }) {
   const { currentUser, isBlocked } = React.useContext(AuthContext);
   const [messages, setMessages] = React.useState([]);
   const [inputText, setInputText] = React.useState("");
+  const [focused, setFocused] = React.useState(false);
 
   const talkId = route.params.talk._id;
 
@@ -66,6 +68,7 @@ export default function Talk({ navigation, route }) {
     if (!isBlocked) {
       if (inputText.length > 0) {
         if (currentUser) {
+          setFocused(false);
           await Firebase.firestore()
             .collection("talks")
             .doc(talkId)
@@ -83,7 +86,6 @@ export default function Talk({ navigation, route }) {
                 photoURL: currentUser.photoURL,
               },
             });
-
           await setInputText("");
         } else {
           alert("You Me Be Logged In To Comment");
@@ -104,22 +106,24 @@ export default function Talk({ navigation, route }) {
       screen: "Home",
     });
   };
-  console.log(messages);
+  console.log(Platform.OS);
 
   if (!messages) return <Text>loading...</Text>;
   return (
-    <SafeAreaView style={talkStyles.container}>
-      <View style={talkStyles.statusBarView} />
-      <View style={talkStyles.backBtnBox}>
-        <Text style={talkStyles.title}>{route.params.talk.title}</Text>
-      </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "position" : "position"}
+      keyboardVerticalOffset={80}
+      style={talkStyles.container}
+    >
+      <Text style={talkStyles.title}>
+        {route.params.talk.title.length > 90
+          ? `${route.params.talk.title.slice(0, 90)}...`
+          : route.params.talk.title}
+      </Text>
       <FlatList
+        style={focused ? talkStyles.flatlistFocused : talkStyles.flatlist}
         data={messages}
         keyExtractor={(item) => item._id}
-        // style={[
-        //   talkStyles.item,
-        //   { backgroundColor: '#6e3b6e' },
-        // ]}
         renderItem={({ item, index }) => (
           <TalkMsg
             navigation={navigation}
@@ -129,59 +133,114 @@ export default function Talk({ navigation, route }) {
           />
         )}
         ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
-        contentContainerStyle={{ paddingBottom: 50 }}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
-      <KeyboardAvoidingView behavior="padding" enabled>
-      <SendMsgInput
-          currentUser={currentUser}
-          handleMsgSend={handleMsgSend}
-          setInputText={setInputText}
-          inputText={inputText}
-        />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      <TextInput
+        style={focused ? talkStyles.textInputFocused : talkStyles.textInput}
+        onChangeText={(inputText) => setInputText(inputText)}
+        value={inputText}
+        clearButtonMode="always"
+        multiline={true}
+        numberOfLines={5}
+        enablesReturnKeyAutomatically
+        placeholder="What are you curious about?"
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+      />
+      <TouchableOpacity
+        style={focused ? talkStyles.buttonFocused : talkStyles.button}
+        onPress={handleMsgSend}
+      >
+        <Text style={talkStyles.buttonText}>SEND</Text>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 }
 
 const talkStyles = StyleSheet.create({
   container: {
+    height: "100%",
     backgroundColor: BACKGROUND,
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 2
-  },
-  item: {
-    flexGrow: 1,
-    paddingBottom: 180,
-  },
-  backBtnBox: {
-    marginTop: 5,
-    marginLeft: 8,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignSelf: "flex-start",
-    marginHorizontal: 5,
-    paddingHorizontal: 3,
-  },
-  backBtn: {
-    width: 30,
-    height: 30,
-    marginLeft: 10,
   },
   title: {
+    height: "13%",
+    flexWrap: "wrap",
+    backgroundColor: BACKGROUND,
     fontFamily: "Lato",
     fontWeight: "bold",
-    fontSize: 17,
-    flexWrap: "wrap",
-    marginHorizontal: 5,
-    paddingHorizontal: 3,
-    marginBottom: 5,
+    fontSize: 16,
+    paddingLeft: 10,
+    // paddingHorizontal: 5,
+    // marginHorizontal: 5,
+    paddingVertical: 10,
     color: PRIMARY,
   },
-  statusBarView: {
-    height: Constants.statusBarHeight,
+  flatlist: {
+    height: "70%",
     backgroundColor: BACKGROUND,
-    width: "100%",
+  },
+  flatlistFocused: {
+    height: "50%",
+    backgroundColor: BACKGROUND,
+  },
+  textInput: {
+    height: "8%",
+    position: "relative",
+    bottom: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: WHITE,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    textAlignVertical: "top",
+  },
+  textInputFocused: {
+    height: "25%",
+    position: "relative",
+    bottom: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: WHITE,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    textAlignVertical: "top",
+  },
+  button: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: PRIMARY,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    paddingVertical: 2,
+    height: "5%",
+  },
+  buttonFocused: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: PRIMARY,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    paddingVertical: 2,
+    height: "8%",
+  },
+  buttonText: {
+    fontSize: BUTTON_TEXT_INPUTS,
+    color: WHITE,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Lato",
+    padding: 5,
   },
 });

@@ -40,20 +40,26 @@ export default function TalkMsg({ item, navigation, talkId }) {
           <View style={msgStyles.msgDetailUsernameAndHowLongAgo}>
             <Text style={msgStyles.username}>
               {item.user.displayName ? item.user.displayName : item.user.email}
-              {"  "}
             </Text>
-            <Text style={msgStyles.time}>{howLongAgo}</Text>
+            <Text style={msgStyles.time}>
+              {"    "}
+              {howLongAgo}
+            </Text>
           </View>
 
-          <TouchableOpacity onPress={handleReport}>
-            <Entypo name="dots-three-vertical" size={15} color="black" />
+          <TouchableOpacity
+            onPress={handleReport}
+            style={{
+              width: "20%",
+              display: "flex",
+              flexDirection: "row-reverse",
+            }}
+          >
+            <Entypo name="dots-three-vertical" size={20} color="black" />
           </TouchableOpacity>
         </View>
 
-        <Text
-          selectable
-          style={msgStyles.talkMsgText}
-        >
+        <Text selectable style={msgStyles.talkMsgText}>
           {item.text}
         </Text>
       </View>
@@ -79,7 +85,6 @@ const msgStyles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   avatar: {
@@ -92,6 +97,8 @@ const msgStyles = StyleSheet.create({
   username: {
     color: PRIMARY,
     fontWeight: "bold",
+    marginHorizontal: 5,
+    paddingHorizontal: 5,
   },
   time: {
     color: GRAY_DARK,
@@ -105,6 +112,7 @@ const msgStyles = StyleSheet.create({
   msgDetailUsernameAndHowLongAgo: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   talkMsgText: {
     lineHeight: 20,

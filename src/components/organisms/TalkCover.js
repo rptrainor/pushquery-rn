@@ -29,10 +29,12 @@ export default function TalkCover({ talk, navigation }) {
 
   return (
     <View style={talkCover.container}>
-      <TouchableOpacity onPress={handleReport}>
+      <TouchableOpacity
+        onPress={handleReport}
+      >
         <Entypo
           name="dots-three-vertical"
-          size={15}
+          size={20}
           color="black"
           style={talkCover.reportBtn}
         />
