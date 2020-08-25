@@ -12,7 +12,6 @@ import { ContextProvider } from "./globalState/providerCompose";
 import tabNavigator from "./src/navigations/tabNavigator";
 import SignUp from "./src/scenes/SignUp";
 import LogIn from "./src/scenes/LogIn";
-import Talk from "./src/scenes/Talk";
 import Report from "./src/scenes/Report";
 import TOS from "./src/scenes/TOS";
 
@@ -49,7 +48,7 @@ export default function App() {
     console.log("complete");
   }
   console.disableYellowBox = true;
-  console.ignoredYellowBox = ['Setting a timer'];
+  console.ignoredYellowBox = ["Setting a timer"];
   return (
     <ContextProvider>
       <NavigationContainer>

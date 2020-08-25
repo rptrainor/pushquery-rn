@@ -1,18 +1,90 @@
 import Constants from "expo-constants";
 import { StyleSheet } from "react-native";
-import {
-  BACKGROUND,
-  PARAGRAPH_COLOR,
-  HIGHLIGHT_DARK,
-  WHITE,
-  PRIMARY,
-} from "./colors";
+import { BACKGROUND, PARAGRAPH_COLOR, WHITE, PRIMARY } from "./colors";
 import {
   PARAGRAPH_LINK_TEXT,
   BUTTON_TEXT_INPUTS,
   HEADER_TEXT,
   SECONDARY_TEXT,
 } from "./typography";
+
+export const ContainersCSS = StyleSheet.create({
+  FlexColStartOnTopContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
+  },
+  FlexColCenteredContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    height: "85%",
+    width: "100%",
+    alignItems: "center",
+    // backgroundColor: "red",
+  },
+});
+
+export const SlideShowCSS = StyleSheet.create({
+  container: {
+    backgroundColor: PRIMARY,
+    minWidth: "100%",
+    maxWidth: "100%",
+    height: "100%",
+    // display: "flex",
+    // flexDirection: "row",
+    top: 0,
+    left: 0,
+  },
+  containerp: {
+    color: WHITE,
+    fontSize: 18,
+    textAlign: "left",
+    padding: 10,
+    width: "100%",
+    // height: "85%"
+  },
+  iconBox: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    margin: 5,
+    width: "100%",
+  },
+  pauseIcon: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+    marginHorizontal: "auto",
+    zIndex: 5,
+    position: "absolute",
+  },
+});
+
+export const ButtonsCSS = StyleSheet.create({
+  tertiaryButton: {
+    backgroundColor: WHITE,
+    padding: 5,
+    borderWidth: 2.5,
+    borderColor: PRIMARY,
+    borderRadius: 10,
+    top: 100,
+  },
+  tertiaryButtonText: {
+    color: PRIMARY,
+    backgroundColor: WHITE,
+    textAlign: "center",
+    fontSize: 24,
+    fontWeight: "700",
+    margin: "auto",
+    fontFamily: "Lato",
+  },
+});
 
 export const styles = StyleSheet.create({
   container: {
@@ -63,6 +135,19 @@ export const styles = StyleSheet.create({
     height: Constants.statusBarHeight,
     backgroundColor: BACKGROUND,
     width: "100%",
+  },
+  SpinLoaderContainer: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: BACKGROUND,
+  },
+  SpinLoader: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    position: "relative",
+    top: "50%",
+    padding: 30,
+    backgroundColor: BACKGROUND,
   },
 });
 

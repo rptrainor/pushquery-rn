@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
+  SafeAreaView
 } from "react-native";
 
 import { AuthContext } from "../../globalState";
@@ -25,7 +26,7 @@ export default function Talk({ navigation, route }) {
   const [inputText, setInputText] = React.useState("");
   const [focused, setFocused] = React.useState(false);
 
-  const talkId = route.params.talk._id;
+  const talkId = route.params.talk.id;
 
   React.useEffect(() => {
     const messageListener = Firebase.firestore()
@@ -110,50 +111,53 @@ export default function Talk({ navigation, route }) {
 
   if (!messages) return <Text>loading...</Text>;
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "position" : "position"}
-      keyboardVerticalOffset={80}
-      style={talkStyles.container}
-    >
-      <Text style={talkStyles.title}>
-        {route.params.talk.title.length > 90
-          ? `${route.params.talk.title.slice(0, 90)}...`
-          : route.params.talk.title}
-      </Text>
-      <FlatList
-        style={focused ? talkStyles.flatlistFocused : talkStyles.flatlist}
-        data={messages}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item, index }) => (
-          <TalkMsg
-            navigation={navigation}
-            Index={index}
-            item={item}
-            talkId={talkId}
-          />
-        )}
-        ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      />
-      <TextInput
-        style={focused ? talkStyles.textInputFocused : talkStyles.textInput}
-        onChangeText={(inputText) => setInputText(inputText)}
-        value={inputText}
-        clearButtonMode="always"
-        multiline={true}
-        numberOfLines={5}
-        enablesReturnKeyAutomatically
-        placeholder="What are you curious about?"
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      />
-      <TouchableOpacity
-        style={focused ? talkStyles.buttonFocused : talkStyles.button}
-        onPress={handleMsgSend}
-      >
-        <Text style={talkStyles.buttonText}>SEND</Text>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
+    <SafeAreaView>
+      <Text>Talk.js</Text>
+    </SafeAreaView>
+    // <KeyboardAvoidingView
+    //   behavior={Platform.OS == "ios" ? "position" : "position"}
+    //   keyboardVerticalOffset={80}
+    //   style={talkStyles.container}
+    // >
+    //   <Text style={talkStyles.title}>
+    //     {route.params.talk.title.length > 90
+    //       ? `${route.params.talk.title.slice(0, 90)}...`
+    //       : route.params.talk.title}
+    //   </Text>
+    //   <FlatList
+    //     style={focused ? talkStyles.flatlistFocused : talkStyles.flatlist}
+    //     data={messages}
+    //     keyExtractor={(item) => item._id}
+    //     renderItem={({ item, index }) => (
+    //       <TalkMsg
+    //         navigation={navigation}
+    //         Index={index}
+    //         item={item}
+    //         talkId={talkId}
+    //       />
+    //     )}
+    //     ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
+    //     contentContainerStyle={{ paddingBottom: 20 }}
+    //   />
+    //   <TextInput
+    //     style={focused ? talkStyles.textInputFocused : talkStyles.textInput}
+    //     onChangeText={(inputText) => setInputText(inputText)}
+    //     value={inputText}
+    //     clearButtonMode="always"
+    //     multiline={true}
+    //     numberOfLines={5}
+    //     enablesReturnKeyAutomatically
+    //     placeholder="What are you curious about?"
+    //     onFocus={() => setFocused(true)}
+    //     onBlur={() => setFocused(false)}
+    //   />
+    //   <TouchableOpacity
+    //     style={focused ? talkStyles.buttonFocused : talkStyles.button}
+    //     onPress={handleMsgSend}
+    //   >
+    //     <Text style={talkStyles.buttonText}>SEND</Text>
+    //   </TouchableOpacity>
+    // </KeyboardAvoidingView>
   );
 }
 
