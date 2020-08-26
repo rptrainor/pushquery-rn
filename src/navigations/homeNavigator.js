@@ -21,7 +21,7 @@ export default function homeNavigator({ route }) {
       <HomeStack.Screen name="Home" options={{ headerShown: false }}>
         {(props) => <Home {...props} />}
       </HomeStack.Screen>
-      <HomeStack.Screen name="Talk" options={{ headerShown: true }}>
+      <HomeStack.Screen name="Talk" options={{ headerShown: false }}>
         {(props) => <Talk {...props} />}
       </HomeStack.Screen>
     </HomeStack.Navigator>

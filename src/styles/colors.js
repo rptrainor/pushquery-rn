@@ -1,8 +1,15 @@
-export const PRIMARY = "#009900";
-// export const LIGHTER = "#009639";
-// export const HIGHLIGHT_DARK = "#0095FF";
-// export const HIGHLIGHT_LIGHT = "#0095FF";
-export const BACKGROUND = "#fef7e6";
+export const PRIMARY = "#6BC88F";
+// export const LIGHTER = "#32915C";
+// export const HIGHLIGHT_DARK = "#2B698E";
+// export const HIGHLIGHT_LIGHT = "#111b36";
+// export const BACKGROUND = "#F8F1BB";
+// export const BACKGROUND = "#FFFFCC";
+// export const BACKGROUND = "#F5F5DC";
+// export const BACKGROUND = "#FFEBCD";
+// export const BACKGROUND = "#fef7e6";
+export const BACKGROUND = "#FFEFD5";
+// export const BACKGROUND = "#FFDAB9";
+
 
 // ACTIONS
 // export const SUCCESS = "#70FF33";

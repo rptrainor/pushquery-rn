@@ -116,6 +116,7 @@ export default function Home({ navigation, route }) {
           navigation={navigation}
           route={route}
           talk={talks[currentTalkIndex]}
+          NextTalk={NextTalk}
         />
       ) : (
         <TouchableOpacity

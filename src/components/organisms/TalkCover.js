@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Image,
 } from "react-native";
-import { Entypo, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useMachine } from "@xstate/react";
 import { Machine } from "xstate";
 
@@ -114,15 +114,6 @@ export default function TalkCover({
 }) {
   const { currentUser } = React.useContext(AuthContext);
   const [state, send] = useMachine(slideMachine);
-  const [displayingNextBtn, setDisplayingNextBtn] = React.useState(false);
-
-  React.useEffect(() => {
-    setTimeout(ShowNextButton, 15000);
-    function ShowNextButton() {
-      setDisplayingNextBtn(true);
-      console.log("DISPLAYED");
-    }
-  }, [slides]);
 
   const handleReport = () => {
     if (!currentUser) {
@@ -140,8 +131,8 @@ export default function TalkCover({
     }
   };
 
-  console.log(state.value, id, slides);
-  console.log(slides[state.value.view || state.value.pause].slideImg);
+  // console.log(state.value, id, slides);
+  // console.log(slides[state.value.view || state.value.pause].slideImg);
   // console.log(Object.keys(state.value)[0]);
   if (!slides || !id) return <SpinLoader />;
   return (
@@ -149,13 +140,11 @@ export default function TalkCover({
       <SafeAreaView>
         <TalkIconBox
           id={id}
-          send={send}
           user={user}
           navigation={navigation}
-          route={route}
           talk={talk}
           send={send}
-          nextTalk={NextTalk}
+          NextTalk={NextTalk}
         />
         <TouchableOpacity
           onPress={() => send("PAUSE")}

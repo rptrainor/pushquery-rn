@@ -47,6 +47,7 @@ export const SlideShowCSS = StyleSheet.create({
     // height: "85%"
   },
   iconBox: {
+    backgroundColor: PRIMARY,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",

@@ -7,28 +7,40 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 
+// CONFIG IMPORTS
 import { AuthContext } from "../../globalState";
+import Firebase from "../../config/firebase";
+// COMPONENT IMPORTS
+import TalkMsg from "../components/organisms/TalkMsg";
+import TertiaryButton from "../components/atoms/TertiaryButton";
+import SingleTalkSlideShow from "../components/molecules/SingleTalkSlideShow";
+// STYLESHEET IMPORTS
 import {
   BACKGROUND,
   PRIMARY,
   WHITE,
   BUTTON_TEXT_INPUTS,
 } from "../styles/colors";
-import Firebase from "../../config/firebase";
-import TalkMsg from "../components/organisms/TalkMsg";
+import { SlideShowCSS } from "../styles/styleSheets";
+import ReviewIconBox from "../components/molecules/ReviewIconBox";
 
 export default function Talk({ navigation, route }) {
-  const { currentUser, isBlocked } = React.useContext(AuthContext);
   const [messages, setMessages] = React.useState([]);
+  const [talk, setTalk] = React.useState({});
   const [inputText, setInputText] = React.useState("");
+  const [showSlideShow, setShowSlideShow] = React.useState(false);
+  const { currentUser, isBlocked } = React.useContext(AuthContext);
   const [focused, setFocused] = React.useState(false);
 
   const talkId = route.params.talk.id;
 
+  // function that pulls the Talk from Firestore
+  // And listens for any messages
   React.useEffect(() => {
+    if (!talkId) return undefined;
     const messageListener = Firebase.firestore()
       .collection("talks")
       .doc(talkId)
@@ -61,8 +73,16 @@ export default function Talk({ navigation, route }) {
         });
         setMessages(messages);
       });
+
+    // pulls the talk from Firestore
+    Firebase.firestore()
+      .collection("talks")
+      .doc(talkId)
+      .get()
+      .then((doc) => setTalk(doc.data()));
+
     return () => messageListener();
-  }, []);
+  }, [talkId]);
 
   const handleMsgSend = async () => {
     const text = inputText;
@@ -107,57 +127,46 @@ export default function Talk({ navigation, route }) {
       screen: "Home",
     });
   };
-  console.log(Platform.OS);
-
-  if (!messages) return <Text>loading...</Text>;
+  // console.log(Platform.OS);
+  console.log(messages);
+  const toggleShowSlideShow = () => setShowSlideShow(!showSlideShow);
+  // console.log(talk);
+  // WAITING FOR MESSAGE AND USER TO LOAD
+  if (!messages) return <SpinLoader />;
+  if (showSlideShow)
+    return (
+      <View style={SlideShowCSS.container}>
+        <SafeAreaView>
+          <SingleTalkSlideShow
+            slides={talk.slides}
+            showSlideShow={showSlideShow}
+            toggleShowSlideShow={toggleShowSlideShow}
+          />
+        </SafeAreaView>
+      </View>
+    );
   return (
-    <SafeAreaView>
-      <Text>Talk.js</Text>
-    </SafeAreaView>
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS == "ios" ? "position" : "position"}
-    //   keyboardVerticalOffset={80}
-    //   style={talkStyles.container}
-    // >
-    //   <Text style={talkStyles.title}>
-    //     {route.params.talk.title.length > 90
-    //       ? `${route.params.talk.title.slice(0, 90)}...`
-    //       : route.params.talk.title}
-    //   </Text>
-    //   <FlatList
-    //     style={focused ? talkStyles.flatlistFocused : talkStyles.flatlist}
-    //     data={messages}
-    //     keyExtractor={(item) => item._id}
-    //     renderItem={({ item, index }) => (
-    //       <TalkMsg
-    //         navigation={navigation}
-    //         Index={index}
-    //         item={item}
-    //         talkId={talkId}
-    //       />
-    //     )}
-    //     ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
-    //     contentContainerStyle={{ paddingBottom: 20 }}
-    //   />
-    //   <TextInput
-    //     style={focused ? talkStyles.textInputFocused : talkStyles.textInput}
-    //     onChangeText={(inputText) => setInputText(inputText)}
-    //     value={inputText}
-    //     clearButtonMode="always"
-    //     multiline={true}
-    //     numberOfLines={5}
-    //     enablesReturnKeyAutomatically
-    //     placeholder="What are you curious about?"
-    //     onFocus={() => setFocused(true)}
-    //     onBlur={() => setFocused(false)}
-    //   />
-    //   <TouchableOpacity
-    //     style={focused ? talkStyles.buttonFocused : talkStyles.button}
-    //     onPress={handleMsgSend}
-    //   >
-    //     <Text style={talkStyles.buttonText}>SEND</Text>
-    //   </TouchableOpacity>
-    // </KeyboardAvoidingView>
+    <View style={SlideShowCSS.container}>
+      <SafeAreaView>
+        <ReviewIconBox
+          showSlideShow={showSlideShow}
+          toggleShowSlideShow={toggleShowSlideShow}
+        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "position" : "position"}
+          keyboardVerticalOffset={80}
+          style={talkStyles.container}
+        >
+          <FlatList 
+          data={messages} 
+          keyExtractor={(item) => item._id}
+          renderItem={({ item, index }) => (
+          <Text>{item.text}</Text>
+          )}
+          />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </View>
   );
 }
 
