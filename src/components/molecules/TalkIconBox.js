@@ -12,7 +12,14 @@ export default function TalkIconBox({ navigation, NextTalk, talk, send }) {
   const { currentUser } = React.useContext(AuthContext);
 
   const navToTalk = () => {
-    navigation.navigate("Talk", { talk });
+    if (!currentUser) {
+      alert(
+        "We are sorry, you will have to log in before you can join the conversation"
+      );
+      navigation.navigate("Me", { screen: "Log In" });
+    } else {
+      navigation.navigate("Talk", { talk });
+    }
   };
   function alertWithUrlForSharing() {
     alert(`You can copy and share this Talk's URL shown below:

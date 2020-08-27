@@ -1,13 +1,25 @@
 import React from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, StatusBar } from "react-native";
 
 // STYLESHEET IMPORTS
-import { styles } from "../../styles/styleSheets";
+import { PRIMARY } from "../../styles/colors";
 
 export default function SpinLoader() {
   return (
-    <View style={styles.SpinLoaderContainer}>
-      <ActivityIndicator style={styles.SpinLoader} />
-    </View>
+    <>
+      <StatusBar hidden={true} />
+      <View
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: PRIMARY,
+        }}
+      >
+        <ActivityIndicator />
+      </View>
+    </>
   );
 }

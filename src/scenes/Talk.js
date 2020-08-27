@@ -128,10 +128,11 @@ export default function Talk({ navigation, route }) {
       screen: "Home",
     });
   };
-  // console.log(Platform.OS);
-  // console.log(messages);
-  const toggleShowSlideShow = () => setShowSlideShow(!showSlideShow);
-  // console.log(talk);
+
+  const toggleShowSlideShow = () => {
+    setShowSlideShow(!showSlideShow);
+  };
+  console.log(messages);
   // WAITING FOR MESSAGE AND USER TO LOAD
   if (!messages) return <SpinLoader />;
   if (showSlideShow)
@@ -169,6 +170,27 @@ export default function Talk({ navigation, route }) {
                   : talkStyles.flatListGroupNoFocus,
               ]}
             >
+              {messages.length == 0 ? (
+                <View
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: 10,
+                  }}
+                >
+                  <Text
+                    style={{ fontSize: 20, color: "#fff", fontWeight: "bold" }}
+                  >
+                    Looks like you are the first to the conversation! Share a
+                    question or comment below and let's get the party started
+                  </Text>
+                </View>
+              ) : (
+                <View />
+              )}
               <FlatList
                 data={messages}
                 keyExtractor={(item) => item._id}
