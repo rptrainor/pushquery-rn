@@ -99,7 +99,7 @@ export default function Home({ navigation, route }) {
   //   currentTalkIndex,
   // });
 
-  if (loading || isMoreLoading) return <SpinLoader />;
+  if (loading || isMoreLoading || !talks) return <SpinLoader />;
   return (
     <View
       style={{
@@ -108,27 +108,15 @@ export default function Home({ navigation, route }) {
       }}
     >
       <StatusBar hidden={true} />
-      {talks[currentTalkIndex] && talks[currentTalkIndex].slides ? (
-        <TalkCover
-          id={talks[currentTalkIndex].id}
-          slides={talks[currentTalkIndex].slides}
-          user={talks[currentTalkIndex].user}
-          navigation={navigation}
-          route={route}
-          talk={talks[currentTalkIndex]}
-          NextTalk={NextTalk}
-        />
-      ) : (
-        <TouchableOpacity
-          onPress={NextTalk}
-          style={{
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          <Text style={{ top: "50%", left: "50%" }}>MAS</Text>
-        </TouchableOpacity>
-      )}
+      <TalkCover
+        id={talks[currentTalkIndex].id}
+        slides={talks[currentTalkIndex].slides}
+        user={talks[currentTalkIndex].user}
+        navigation={navigation}
+        route={route}
+        talk={talks[currentTalkIndex]}
+        NextTalk={NextTalk}
+      />
     </View>
   );
 }

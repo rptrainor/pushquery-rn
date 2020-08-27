@@ -27,7 +27,7 @@ export default function SingleComment({ message, user }) {
   // console.log(user.displayName);
   // console.log(user.uid);
   // console.log(message);
-  console.log(isCurrentUserCommentAuthor);
+  console.log(message.user);
   return (
     <View
       style={[
@@ -43,7 +43,7 @@ export default function SingleComment({ message, user }) {
             : SingleCommentStyles.avatarLeft,
         ]}
         source={{
-          uri: user.photoURL,
+          uri: message.user.photoURL,
         }}
       />
       <View
@@ -56,11 +56,15 @@ export default function SingleComment({ message, user }) {
         }}
       >
         <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
-          {user.displayName}
+          {message.user.displayName}
         </Text>
-        <Text style={{ color: GRAY_DARK, marginLeft: 10 }}>posted {howLongAgo} ago</Text>
+        <Text style={{ color: GRAY_DARK, marginLeft: 10 }}>
+          posted {howLongAgo} ago
+        </Text>
       </View>
-      <View style={{top: -40, marginHorizontal: 5}} ><Text>{message.text}</Text></View>
+      <View style={{ top: -40, marginHorizontal: 5 }}>
+        <Text>{message.text}</Text>
+      </View>
     </View>
   );
 }
