@@ -21,17 +21,16 @@ export default function SignUp({ navigation }) {
       await Firebase.auth().createUserWithEmailAndPassword(email, password);
       await Firebase.auth().currentUser.updateProfile({
         displayName,
-        photoURL:
-          "https://res.cloudinary.com/dx35aw3ub/image/upload/v1591064978/icon_prufa1.png",
+        photoURL: `https://avatar.tobi.sh/${email}`,
       });
       await Firebase.firestore()
         .collection("users")
         .doc(Firebase.auth().currentUser.uid)
         .set({
           createdAt: new Date().getTime(),
-          email: Firebase.auth().currentUser.email,
-          displayName: Firebase.auth().currentUser.displayName,
-          photoURL: Firebase.auth().currentUser.photoURL,
+          email: email,
+          displayName: displayName,
+          photoURL: `https://avatar.tobi.sh/${email}`,
           flag: {
             flagged: false,
           },

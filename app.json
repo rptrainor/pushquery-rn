@@ -7,15 +7,15 @@
       "android",
       "web"
     ],
-    "version": "1.0.4",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "primaryColor": "#009900",
-    "backgroundColor": "#F2EEE4",
+    "primaryColor": "#6BC88F",
+    "backgroundColor": "#FFEFD5",
     "splash": {
       "image": "./assets/PqSplashScreen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F2EEE4"
+      "backgroundColor": "#FFEFD5"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,12 +27,12 @@
       "supportsTablet": true,
       "bundleIdentifier": "pushquery",
       "icon": "./assets/icon.png",
-      "backgroundColor": "#F2EEE4"
+      "backgroundColor": "#FFEFD5"
     },
     "android": {
       "package": "pushquery.app",
-      "versionCode": 2,
-      "backgroundColor": "#F2EEE4",
+      "versionCode": 3,
+      "backgroundColor": "#FFEFD5",
       "icon": "./assets/icon.png",
       "permissions": [
         "com.anddoes.launcher.permission.UPDATE_COUNT",
