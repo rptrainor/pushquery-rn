@@ -9,6 +9,7 @@ import TertiaryButton from "../atoms/TertiaryButton";
 import ReviewIconBox from "../molecules/ReviewIconBox";
 // STYLE SHEET IMPORTS
 import { ContainersCSS, SlideShowCSS } from "../../styles/styleSheets";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SingleTalkSlideShow({
   slides,
@@ -27,33 +28,34 @@ export default function SingleTalkSlideShow({
 
   console.log({ reviewSlideIndex });
   return (
-    // <View style={ContainersCSS.FlexColCenteredContainer}>
-    <View>
-      <ReviewIconBox
-        toggleShowSlideShow={toggleShowSlideShow}
-        showSlideShow={showSlideShow}
-        reviewSlideIndex={reviewSlideIndex}
-        backOneSlide={backOneSlide}
-        forwardOneSlide={forwardOneSlide}
-      />
-      <View style={ContainersCSS.FlexColCenteredContainer}>
-        {slides && slides[reviewSlideIndex].isImg ? (
-          <Image
-            style={{
-              resizeMode: "contain",
-              height: "85%",
-              width: "100%",
-            }}
-            source={{
-              uri: slides[reviewSlideIndex].slideImg,
-            }}
-          />
-        ) : (
-          <Text style={SlideShowCSS.containerp}>
-            {slides[reviewSlideIndex].slideText}
-          </Text>
-        )}
-      </View>
+    <View style={SlideShowCSS.container}>
+      <SafeAreaView>
+        <ReviewIconBox
+          toggleShowSlideShow={toggleShowSlideShow}
+          showSlideShow={showSlideShow}
+          reviewSlideIndex={reviewSlideIndex}
+          backOneSlide={backOneSlide}
+          forwardOneSlide={forwardOneSlide}
+        />
+        <View style={ContainersCSS.FlexColCenteredContainer}>
+          {slides && slides[reviewSlideIndex].isImg ? (
+            <Image
+              style={{
+                resizeMode: "contain",
+                height: "85%",
+                width: "100%",
+              }}
+              source={{
+                uri: slides[reviewSlideIndex].slideImg,
+              }}
+            />
+          ) : (
+            <Text style={SlideShowCSS.containerp}>
+              {slides[reviewSlideIndex].slideText}
+            </Text>
+          )}
+        </View>
+      </SafeAreaView>
     </View>
   );
 }

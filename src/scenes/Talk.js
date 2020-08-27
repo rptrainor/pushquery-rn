@@ -8,22 +8,24 @@ import {
   StyleSheet,
   TextInput,
   SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
-
 // CONFIG IMPORTS
 import { AuthContext } from "../../globalState";
 import Firebase from "../../config/firebase";
 // COMPONENT IMPORTS
-import TalkMsg from "../components/organisms/TalkMsg";
-import TertiaryButton from "../components/atoms/TertiaryButton";
+import SingleComment from "../components/organisms/SingleComment";
 import SingleTalkSlideShow from "../components/molecules/SingleTalkSlideShow";
 // STYLESHEET IMPORTS
 import {
   BACKGROUND,
   PRIMARY,
   WHITE,
-  BUTTON_TEXT_INPUTS,
+  SECONDARY,
+  SECONDARY_DARK,
 } from "../styles/colors";
+import { BUTTON_TEXT_INPUTS } from "../styles/typography";
 import { SlideShowCSS } from "../styles/styleSheets";
 import ReviewIconBox from "../components/molecules/ReviewIconBox";
 
@@ -121,137 +123,124 @@ export default function Talk({ navigation, route }) {
       );
     }
   };
-
   const returnToMainHome = () => {
     navigation.navigate("Home", {
       screen: "Home",
     });
   };
   // console.log(Platform.OS);
-  console.log(messages);
+  // console.log(messages);
   const toggleShowSlideShow = () => setShowSlideShow(!showSlideShow);
   // console.log(talk);
   // WAITING FOR MESSAGE AND USER TO LOAD
   if (!messages) return <SpinLoader />;
   if (showSlideShow)
     return (
-      <View style={SlideShowCSS.container}>
-        <SafeAreaView>
-          <SingleTalkSlideShow
-            slides={talk.slides}
-            showSlideShow={showSlideShow}
-            toggleShowSlideShow={toggleShowSlideShow}
-          />
-        </SafeAreaView>
-      </View>
+      <SingleTalkSlideShow
+        slides={talk.slides}
+        showSlideShow={showSlideShow}
+        toggleShowSlideShow={toggleShowSlideShow}
+      />
     );
   return (
-    <View style={SlideShowCSS.container}>
-      <SafeAreaView>
-        <ReviewIconBox
-          showSlideShow={showSlideShow}
-          toggleShowSlideShow={toggleShowSlideShow}
-        />
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "position" : "position"}
-          keyboardVerticalOffset={80}
-          style={talkStyles.container}
-        >
-          <FlatList 
-          data={messages} 
-          keyExtractor={(item) => item._id}
-          renderItem={({ item, index }) => (
-          <Text>{item.text}</Text>
-          )}
-          />
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </View>
+    <>
+      <SafeAreaView style={{ flex: 0, backgroundColor: PRIMARY }} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={{
+          flex: 1,
+          flexDirection: "column",
+        }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <>
+            <View style={{ width: "100%", flex: 1, backgroundColor: PRIMARY }}>
+              <ReviewIconBox
+                showSlideShow={showSlideShow}
+                toggleShowSlideShow={toggleShowSlideShow}
+              />
+            </View>
+            <View
+              style={{
+                width: "100%",
+                backgroundColor: PRIMARY,
+                flex: 6,
+              }}
+            >
+              <FlatList
+                data={messages}
+                keyExtractor={(item) => item._id}
+                renderItem={({ item, index }) => (
+                  <SingleComment
+                    message={item}
+                    key={index}
+                    user={currentUser}
+                  />
+                )}
+                ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
+                contentContainerStyle={{ paddingBottom: 10 }}
+              />
+            </View>
+            <View style={{ width: "100%", backgroundColor: PRIMARY, flex: 1.5 }}>
+              <View
+                style={{ display: "flex", flexDirection: "row", flex: 1 }}
+              >
+                <TextInput
+                  placeholder="What are your curious about?"
+                  onChangeText={(event) => setInputText(event)}
+                  value={inputText}
+                  multiline={true}
+                  numberOfLines={5}
+                  style={{
+                    minHeight: 30,
+                    width: "95%",
+                    backgroundColor: "#fff",
+                    flex: 8,
+                    paddingHorizontal: 5,
+                    // marginHorizontal: 10,
+                    // borderTopLeftRadius: 10,
+                    // borderTopRightRadius: 10,
+                    // marginTop: 10,
+                    margin: 10,
+                    borderRadius: 10,
+                    marginRight: 5,
+                  }}
+                />
+                <TouchableOpacity
+                  style={{
+                    minHeight: 20,
+                    width: "95%",
+                    backgroundColor: SECONDARY,
+                    flex: 2,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    // marginHorizontal: 10,
+                    // borderBottomLeftRadius: 10,
+                    // borderBottomRightRadius: 10,
+                    // marginBottom: 10,
+                    margin: 10,
+                    borderRadius: 10,
+                    marginLeft: 5,
+                  }}
+                  onPress={handleMsgSend}
+                >
+                  <Text style={talkStyles.buttonText}>SEND</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </>
   );
 }
 
 const talkStyles = StyleSheet.create({
-  container: {
-    height: "100%",
-    backgroundColor: BACKGROUND,
-  },
-  title: {
-    height: "13%",
-    flexWrap: "wrap",
-    backgroundColor: BACKGROUND,
-    fontFamily: "Lato",
-    fontWeight: "bold",
-    fontSize: 16,
-    paddingHorizontal: 7,
-    paddingVertical: 10,
-    color: PRIMARY,
-  },
-  flatlist: {
-    height: "70%",
-    backgroundColor: BACKGROUND,
-  },
-  flatlistFocused: {
-    height: "50%",
-    backgroundColor: BACKGROUND,
-  },
-  textInput: {
-    height: "8%",
-    position: "relative",
-    bottom: 0,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: WHITE,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    paddingVertical: 2,
-    paddingHorizontal: 10,
-    textAlignVertical: "top",
-  },
-  textInputFocused: {
-    height: "25%",
-    position: "relative",
-    bottom: 0,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: WHITE,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    paddingVertical: 2,
-    paddingHorizontal: 10,
-    textAlignVertical: "top",
-  },
-  button: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: PRIMARY,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    paddingVertical: 2,
-    height: "5%",
-  },
-  buttonFocused: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backgroundColor: PRIMARY,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    paddingVertical: 2,
-    height: "8%",
-  },
   buttonText: {
     fontSize: BUTTON_TEXT_INPUTS,
     color: WHITE,
     textAlign: "center",
     fontWeight: "bold",
     fontFamily: "Lato",
-    padding: 5,
   },
 });

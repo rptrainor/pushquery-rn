@@ -14,7 +14,7 @@ export default function ReviewIconBox({
 }) {
   return (
     <View style={SlideShowCSS.iconBox}>
-      {reviewSlideIndex !== 0 ? (
+      {reviewSlideIndex !== 0 && showSlideShow ? (
         <TouchableOpacity onPress={backOneSlide}>
           <AntDesign name="leftcircleo" size={40} color="#fff" />
         </TouchableOpacity>
@@ -28,7 +28,7 @@ export default function ReviewIconBox({
           color="#fff"
         />
       </TouchableOpacity>
-      {reviewSlideIndex !== 4 ? (
+      {reviewSlideIndex !== 4 && showSlideShow ? (
         <TouchableOpacity onPress={forwardOneSlide}>
           <AntDesign name="rightcircleo" size={40} color="#fff" />
         </TouchableOpacity>
