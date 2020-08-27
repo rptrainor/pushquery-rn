@@ -58,20 +58,20 @@ export default function SignUp({ navigation }) {
         </View>
         <TextInput
           style={styles.form_text_input}
-          onChangeText={(email) => setEmail(email)}
-          placeholder="email"
-          autoCapitalize="none"
+          onChangeText={(displayName) => setDisplayName(displayName)}
+          placeholder="How you wish to be addressed"
         />
         <TextInput
           style={styles.form_text_input}
-          onChangeText={(displayName) => setDisplayName(displayName)}
-          placeholder="display name"
+          onChangeText={(email) => setEmail(email)}
+          placeholder="Email"
+          autoCapitalize="none"
         />
         <TextInput
           style={styles.form_text_input}
           style={styles.form_text_input}
           onChangeText={(password) => setPassword(password)}
-          placeholder="password"
+          placeholder="Password"
           secureTextEntry={true}
           autoCapitalize="none"
         />

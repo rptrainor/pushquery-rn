@@ -23,7 +23,7 @@ export default function ReviewIconBox({
       )}
       <TouchableOpacity onPress={toggleShowSlideShow}>
         <AntDesign
-          name={showSlideShow ? "message1" : "dotchart"}
+          name={showSlideShow ? "message1" : "iconfontdesktop"}
           size={40}
           color="#fff"
         />

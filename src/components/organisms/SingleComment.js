@@ -11,7 +11,7 @@ import {
   BACKGROUND,
 } from "../../styles/colors";
 
-export default function SingleComment({ message, navigation, talkId, user }) {
+export default function SingleComment({ message, user }) {
   const [
     isCurrentUserCommentAuthor,
     setIsCurrentUserCommentAuthor,
@@ -58,7 +58,7 @@ export default function SingleComment({ message, navigation, talkId, user }) {
         <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
           {user.displayName}
         </Text>
-        <Text style={{ color: GRAY_DARK, marginLeft: 10 }}>{howLongAgo}</Text>
+        <Text style={{ color: GRAY_DARK, marginLeft: 10 }}>posted {howLongAgo} ago</Text>
       </View>
       <View style={{top: -40, marginHorizontal: 5}} ><Text>{message.text}</Text></View>
     </View>

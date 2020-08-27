@@ -52,7 +52,7 @@ export default function tabNavigator({ route }) {
       }}
     >
       <Tab.Screen name="Home" component={homeNavigator} route={route} />
-      <Tab.Screen name="Create" component={createNavigation} />
+      {/* <Tab.Screen name="Create" component={createNavigation} /> */}
       <Tab.Screen name="Our Values" component={Values} />
       <Tab.Screen name="Me" component={authNavigator} />
     </Tab.Navigator>

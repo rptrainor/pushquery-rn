@@ -154,18 +154,20 @@ export default function Talk({ navigation, route }) {
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <>
-            <View style={{ width: "100%", flex: 1, backgroundColor: PRIMARY }}>
+            <View
+              style={{ width: "100%", flex: 1.3, backgroundColor: PRIMARY }}
+            >
               <ReviewIconBox
                 showSlideShow={showSlideShow}
                 toggleShowSlideShow={toggleShowSlideShow}
               />
             </View>
             <View
-              style={{
-                width: "100%",
-                backgroundColor: PRIMARY,
-                flex: 6,
-              }}
+              style={[
+                focused
+                  ? talkStyles.flatListGroupFocus
+                  : talkStyles.flatListGroupNoFocus,
+              ]}
             >
               <FlatList
                 data={messages}
@@ -181,10 +183,14 @@ export default function Talk({ navigation, route }) {
                 contentContainerStyle={{ paddingBottom: 10 }}
               />
             </View>
-            <View style={{ width: "100%", backgroundColor: PRIMARY, flex: 1.5 }}>
-              <View
-                style={{ display: "flex", flexDirection: "row", flex: 1 }}
-              >
+            <View
+              style={[
+                focused
+                  ? talkStyles.inputGroupFocus
+                  : talkStyles.inputGroupNoFocus,
+              ]}
+            >
+              <View style={{ display: "flex", flexDirection: "row", flex: 1 }}>
                 <TextInput
                   placeholder="What are your curious about?"
                   onChangeText={(event) => setInputText(event)}
@@ -197,14 +203,12 @@ export default function Talk({ navigation, route }) {
                     backgroundColor: "#fff",
                     flex: 8,
                     paddingHorizontal: 5,
-                    // marginHorizontal: 10,
-                    // borderTopLeftRadius: 10,
-                    // borderTopRightRadius: 10,
-                    // marginTop: 10,
                     margin: 10,
                     borderRadius: 10,
                     marginRight: 5,
                   }}
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
                 />
                 <TouchableOpacity
                   style={{
@@ -214,10 +218,6 @@ export default function Talk({ navigation, route }) {
                     flex: 2,
                     justifyContent: "center",
                     alignItems: "center",
-                    // marginHorizontal: 10,
-                    // borderBottomLeftRadius: 10,
-                    // borderBottomRightRadius: 10,
-                    // marginBottom: 10,
                     margin: 10,
                     borderRadius: 10,
                     marginLeft: 5,
@@ -243,4 +243,8 @@ const talkStyles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "Lato",
   },
+  inputGroupNoFocus: { width: "100%", backgroundColor: PRIMARY, flex: 1 },
+  inputGroupFocus: { width: "100%", backgroundColor: PRIMARY, flex: 3 },
+  flatListGroupNoFocus: { width: "100%", backgroundColor: PRIMARY, flex: 8 },
+  flatListGroupFocus: { width: "100%", backgroundColor: PRIMARY, flex: 7 },
 });
