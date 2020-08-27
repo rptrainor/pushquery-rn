@@ -174,7 +174,7 @@ export default function TalkCover({
                 }}
               />
             ) : (
-              <Text style={SlideShowCSS.containerp}>
+              <Text style={SlideShowCSS.containerp} selectable={true}>
                 {slides[state.value.view || state.value.pause].slideText}
               </Text>
             )}

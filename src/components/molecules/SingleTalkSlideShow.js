@@ -50,7 +50,7 @@ export default function SingleTalkSlideShow({
               }}
             />
           ) : (
-            <Text style={SlideShowCSS.containerp}>
+            <Text style={SlideShowCSS.containerp} selectable={true}>
               {slides[reviewSlideIndex].slideText}
             </Text>
           )}

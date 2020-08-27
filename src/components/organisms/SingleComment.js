@@ -55,14 +55,14 @@ export default function SingleComment({ message, user }) {
           left: 50,
         }}
       >
-        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
+        <Text style={{ fontWeight: "bold", marginLeft: 10 }} selectable={true}>
           {message.user.displayName}
         </Text>
         <Text style={{ color: GRAY_DARK, marginLeft: 10 }}>
           posted {howLongAgo} ago
         </Text>
       </View>
-      <View style={{ top: -40, marginHorizontal: 5 }}>
+      <View style={{ top: -40, marginHorizontal: 5 }} selectable={true}>
         <Text>{message.text}</Text>
       </View>
     </View>

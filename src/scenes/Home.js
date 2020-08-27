@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  View,
-  SafeAreaView,
-  FlatList,
-  ActivityIndicator,
-  StatusBar,
-  Text,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { View, StatusBar } from "react-native";
 
 // CONFIG IMPORTS
 import firebase from "../../config/firebase";
@@ -26,7 +16,10 @@ export default function Home({ navigation, route }) {
   const [isMoreLoading, setIsMoreLoading] = React.useState(false);
   const [currentTalkIndex, setCurrentTalkIndex] = React.useState(0);
 
-  const talksRef = firebase.firestore().collection("talks");
+  const talksRef = firebase
+    .firestore()
+    .collection("talks")
+    .where("flag.flagged", "==", false);
 
   // pulling the talks from Firebase
   React.useEffect(() => {
